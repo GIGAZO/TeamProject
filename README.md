@@ -1,1 +1,1 @@
-# TeamProject
+# GiGaZo TeamProject
