@@ -213,6 +213,7 @@ public class CampManagementApplication {
         return sc.next();
     }
 
+    // 효진 part
     // 수강생의 과목별 시험 회차 및 점수 등록
     private static void createScore() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
