@@ -1,4 +1,4 @@
-package TeamProject.model;
+package TeamProject.src.model;
 
 public class Score {
 

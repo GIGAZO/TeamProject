@@ -1,7 +1,7 @@
-package TeamProject;
+package TeamProject.src;
 
-import TeamProject.model.Student;
-import TeamProject.model.Subject;
+import TeamProject.src.model.Student;
+import TeamProject.src.model.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
