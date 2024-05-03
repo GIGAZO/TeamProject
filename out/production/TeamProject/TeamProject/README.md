@@ -1,1 +1,0 @@
-# GiGaZo TeamProject
