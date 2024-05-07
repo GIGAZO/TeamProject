@@ -330,13 +330,72 @@ public class CampManagementApplication {
     // 수강생의 과목별 회차 점수 수정 (지우님 파트)
     private static void updateRoundScoreBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
+
+        // 관리할 수강생 존재하는지 확인
+        boolean studentExist = false;
+        for (Student s : studentStore) {
+            if (studentId.equals(s.getStudentId())) {
+                studentExist = true;
+                break;
+            }
+        }
+
+        if (!studentExist) {
+            System.out.println("등록되지 않은 수강생 번호입니다.");
+            return;
+        }
+
         // 기능 구현 (수정할 과목 및 회차, 점수)
-        System.out.println("시험 점수를 수정합니다...");
-        // 기능 구현
-        System.out.println("\n점수 수정 성공!");
+        System.out.println("현재 수강중인 과목: ");
+        for (Student student : studentStore) {
+            if (studentId.equals(student.getStudentId())) {
+                List<Subject> subjects = student.getSubjectList();
+                for (Subject sub : subjects) {
+                    System.out.println(sub.getSubjectName());
+                }
+                break;
+            }
+        }
+
+        System.out.println("\n시험 점수를 수정합니다...");
+
+        System.out.print("\n수정할 과목 이름을 입력하세요: ");
+        String subjectName = sc.next();
+
+        System.out.print("수정할 회차를 입력하세요: ");
+        int round = sc.nextInt();
+
+        System.out.print("새로운 점수를 입력하세요: ");
+        int newScore = sc.nextInt();
+
+        // 해당 과목 및 회차를 가진 수강생의 점수 수정
+        boolean scoreUpdate = false;
+        outerLoop:
+        for (Student student : studentStore) {
+            if (studentId.equals(student.getStudentId())) {
+                List<Subject> subjects = student.getSubjectList();
+                for (Subject sub : subjects) {
+                    if (subjectName.equals(sub.getSubjectName())) {
+                        List<Score> scores = sub.getScoreList();
+                        for (Score score : scores) {
+                            if (round == score.getRound()) {
+                                score.setScore(newScore);
+                                System.out.println("회차 " + round + "의 점수가 수정되었습니다.");
+                                scoreUpdate = true;
+                                break outerLoop; // 외부 반복문 종료
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (!scoreUpdate) {
+            System.out.println("수정할 점수를 찾지 못했습니다. 다시 시도해주세요.");
+        }
     }
 
-    // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
+
+        // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
     private static void inquireRoundGradeBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (조회할 특정 과목)
