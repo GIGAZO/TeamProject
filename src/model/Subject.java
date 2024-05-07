@@ -55,38 +55,42 @@ public class Subject {
         return roundList;
     }
 
-    // 회차별 점수 등급 산정
-    public void makeGrade(int score, int round) {
-        if (this.getSubjectType() == "MANDATORY") { // 필수 과목일 경우
+// 지우 수정: 등급 반환하도록 변경
+    public char makeGrade(int score, int round) {
+        char grade;
+        if (this.getSubjectType().equals("MANDATORY")) { // 필수 과목일 경우
             if (95 <= score && score <= 100) {
-                this.setScore(round, score, 'A');
+                grade = 'A';
             } else if (90 <= score && score <= 94) {
-                this.setScore(round, score, 'B');
+                grade = 'B';
             } else if (80 <= score && score <= 89) {
-                this.setScore(round, score, 'C');
+                grade = 'C';
             } else if (70 <= score && score <= 79) {
-                this.setScore(round, score, 'D');
+                grade = 'D';
             } else if (60 <= score && score <= 69) {
-                this.setScore(round, score, 'F');
+                grade = 'F';
             } else {
-                this.setScore(round, score, 'N');
+                grade = 'N';
             }
         } else { // 선택 과목일 경우
             if (90 <= score && score <= 100) {
-                this.setScore(round, score, 'A');
+                grade = 'A';
             } else if (80 <= score && score <= 89) {
-                this.setScore(round, score, 'B');
+                grade = 'B';
             } else if (70 <= score && score <= 79) {
-                this.setScore(round, score, 'C');
+                grade = 'C';
             } else if (60 <= score && score <= 69) {
-                this.setScore(round, score, 'D');
+                grade = 'D';
             } else if (50 <= score && score <= 59) {
-                this.setScore(round, score, 'F');
+                grade = 'F';
             } else {
-                this.setScore(round, score, 'N');
+                grade = 'N';
             }
         }
+        this.setScore(round, score, grade); // 등급을 설정한 뒤에 점수를 저장
+        return grade;
     }
+}
 
     // 과목별 평균 등급 산정
     public void averageGrade() {

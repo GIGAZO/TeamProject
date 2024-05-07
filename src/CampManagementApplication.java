@@ -381,8 +381,18 @@ public class CampManagementApplication {
                         List<Score> scores = sub.getScoreList();
                         for (Score score : scores) {
                             if (round == score.getRound()) {
-                                score.setScore(newScore);
+                                // 이전 점수와 등급 저장
+                                int prevScore = score.getScore();
+                                char prevGrade = score.getGrade();
+
+                                score.setScore(newScore); // 점수 업데이트
+                                char newGrade = sub.makeGrade(newScore, round); // 등급 다시 계산
                                 System.out.println("회차 " + round + "의 점수가 수정되었습니다.");
+                                System.out.println("수정된 과목: " + sub.getSubjectName());
+                                System.out.println("이전 점수: " + prevScore);
+                                System.out.println("수정된 점수: " + newScore);
+                                System.out.println("이전 등급: " + prevGrade);
+                                System.out.println("수정된 등급: " + newGrade);
                                 scoreUpdate = true;
                                 break outerLoop; // 외부 반복문 종료
                             }
