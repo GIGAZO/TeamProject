@@ -232,8 +232,7 @@ public class CampManagementApplication {
             System.out.println("1. 수강생의 과목별 시험 회차 및 점수 등록");
             System.out.println("2. 수강생의 과목별 회차 점수 수정");
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
-            System.out.println("4. 수강생의 과목별 평균 등급 조회");
-            System.out.println("5. 메인 화면 이동");
+            System.out.println("4. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
@@ -241,8 +240,7 @@ public class CampManagementApplication {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
                 case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
-                case 4 -> inquireSubjectAverageByStudent(); // 수강생의 과목별 평균 등급 조회
-                case 5 -> flag = false; // 메인 화면 이동
+                case 4 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -406,13 +404,44 @@ public class CampManagementApplication {
         }
     }
 
-
         // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
     private static void inquireRoundGradeBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        // 기능 구현 (조회할 특정 과목)
-        System.out.println("회차별 등급을 조회합니다...");
-        // 기능 구현
+        List<Subject> subList = null;
+        Subject sub = null;
+
+        for (Student s : studentStore) {
+            if (studentId.equals(s.getStudentId())) {
+                subList = s.getSubjectList();
+                subList.forEach(n -> System.out.print(n.getSubjectName() + " "));
+                System.out.println();
+                break;
+            }
+        }
+
+        System.out.println("점수를 조회할 과목을 선택하시오");
+
+        // 과목 선택
+        while (true) {
+            String subName = sc.next();
+            boolean flag = false;
+            for (Subject s : subList) {
+                if (s.getSubjectName().equals(subName)) {
+                    sub = s;
+                    flag = true;
+                    for(int i = 0; i < sub.getScoreList().size(); i++){
+                        System.out.println(subName + "의 " + i + "회차 등급은 " + s.getScoreList().get(i).getGrade() + "입니다.");
+                    }
+                    break;
+                }
+            }
+            if (!flag) {
+                System.out.println("현재 학생이 수강하고 있는 과목이 아닙니다. 다시 과목을 선택해주세요.");
+            } else {
+                break;
+            }
+        }
+
         System.out.println("\n등급 조회 성공!");
     }
 
