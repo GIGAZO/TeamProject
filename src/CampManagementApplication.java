@@ -7,6 +7,7 @@ import TeamProject.src.model.Subject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class CampManagementApplication {
     // 데이터 저장소
@@ -205,17 +206,71 @@ public class CampManagementApplication {
         }
     }
 
+
+
     // 수강생 등록 (상윤님 파트)
     private static void createStudent() {
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
-        // 기능 구현 (필수 과목, 선택 과목)
-
         //Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
-        // 기능 구현
+
+        String studentId = sequence(INDEX_TYPE_STUDENT);
+        Student newStudent = new Student(studentId, studentName);
+
+        // 기능 구현 (필수 과목, 선택 과목)
+        System.out.println("필수 과목을 선택하세요. 최소 3개:");
+        selectSubjects(newStudent, SUBJECT_TYPE_MANDATORY, 3);
+
+        System.out.println("선택 과목을 선택하세요. 최소 2개:");
+        selectSubjects(newStudent, SUBJECT_TYPE_CHOICE, 2);
+
+        studentStore.add(newStudent);
         System.out.println("수강생 등록 성공!\n");
     }
+
+    private static void selectSubjects(Student student, String subjectType, int minimumSubjects) {
+        // 과목의 타입에 따라 선택지가 만들어지도록
+        List<Subject> choiceSubjects = subjectStore.stream()
+                .filter(subject -> subject.getSubjectType().equals(subjectType)) // 파라미터에 담긴 과목 타입으로 필터링(같은 것을 찾음)
+                .collect(Collectors.toList()); // 필터링의 결과를 다시 리스트로 담는 것 -> availableSubjects에 담김
+        int count = 0;
+        System.out.println("과목을 선택하세요(번호 입력):");
+
+        while (true) {
+            // 선택지 생성, 과목을 리스트 형태로
+            for (int i = 0; i < choiceSubjects.size(); i++) {
+                Subject sub = choiceSubjects.get(i);
+                System.out.println((i + 1) + ". " + sub.getSubjectName());
+            }
+
+
+            int choice = sc.nextInt() - 1; // 입력 받은 숫자에서 -1로 번호 조정
+            if (choice >= 0 && choice < choiceSubjects.size()) {
+                Subject selectedSubject = choiceSubjects.get(choice);
+                if (!student.getSubjectList().contains(selectedSubject)) {
+                    student.setSubjectList(selectedSubject);
+                    count++;
+                    System.out.println(selectedSubject.getSubjectName() + " 과목이 추가되었습니다.");
+                } else {
+                    System.out.println("이미 선택된 과목입니다.");
+                }
+            } else {
+                System.out.println("잘못 입력되었습니다. 다시 선택해주세요.");
+            }
+
+            if (count >= minimumSubjects) {
+                System.out.print("과목 더 추가하시겠습니까? (y/n): ");
+                String answer = sc.next();
+                if (answer.equalsIgnoreCase("n") && choice == choiceSubjects.size()) {
+                    break;
+                }
+            }
+        }
+    }
+
+
+
 
     // 수강생 목록 조회 (승훈님 파트)
     private static void inquireStudent() {
@@ -264,16 +319,8 @@ public class CampManagementApplication {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }
-
-    // 수강생의 과목별 시험 회차 및 점수 등록 (효진님 파트)
-    private static void createScore() {
-        // 관리할 수강생 고유 번호
-        String studentId = getStudentId();
-        List<Subject> subList = null;
-        Subject sub = null;
-
-        System.out.println("점수를 등록할 과목을 선택하시오");
-        // 해당 수강생이 듣는 과목 출력
+    private static List<Subject> printSubjectByStudent(String studentId) {
+        List<Subject> subList = new ArrayList<>();
         for (Student s : studentStore) {
             if (studentId.equals(s.getStudentId())) {
                 subList = s.getSubjectList();
@@ -282,6 +329,18 @@ public class CampManagementApplication {
                 break;
             }
         }
+        return subList;
+    }
+
+    // 수강생의 과목별 시험 회차 및 점수 등록 (효진님 파트)
+    private static void createScore() {
+        // 관리할 수강생 고유 번호
+        String studentId = getStudentId();
+        Subject sub = null;
+
+        System.out.println("점수를 등록할 과목을 선택하시오");
+        // 해당 수강생이 듣는 과목 출력
+        List<Subject> subList = printSubjectByStudent(studentId);
         // 과목 선택
         while (true) {
             String subName = sc.next();
@@ -387,8 +446,18 @@ public class CampManagementApplication {
                         List<Score> scores = sub.getScoreList();
                         for (Score score : scores) {
                             if (round == score.getRound()) {
-                                score.setScore(newScore);
+                                // 이전 점수와 등급 저장
+                                int prevScore = score.getScore();
+                                char prevGrade = score.getGrade();
+
+                                score.setScore(newScore); // 점수 업데이트
+                                char newGrade = sub.makeGrade(newScore, round); // 등급 다시 계산
                                 System.out.println("회차 " + round + "의 점수가 수정되었습니다.");
+                                System.out.println("수정된 과목: " + sub.getSubjectName());
+                                System.out.println("이전 점수: " + prevScore);
+                                System.out.println("수정된 점수: " + newScore);
+                                System.out.println("이전 등급: " + prevGrade);
+                                System.out.println("수정된 등급: " + newGrade);
                                 scoreUpdate = true;
                                 break outerLoop; // 외부 반복문 종료
                             }
@@ -402,13 +471,36 @@ public class CampManagementApplication {
         }
     }
 
-
         // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
     private static void inquireRoundGradeBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        // 기능 구현 (조회할 특정 과목)
-        System.out.println("회차별 등급을 조회합니다...");
-        // 기능 구현
+        Subject sub = null;
+
+        List<Subject> subList = printSubjectByStudent(studentId);
+
+        System.out.println("점수를 조회할 과목을 선택하시오");
+
+        // 과목 선택
+        while (true) {
+            String subName = sc.next();
+            boolean flag = false;
+            for (Subject s : subList) {
+                if (s.getSubjectName().equals(subName)) {
+                    sub = s;
+                    flag = true;
+                    for(int i = 0; i < sub.getScoreList().size(); i++){
+                        System.out.println(subName + "의 " + i + "회차 등급은 " + s.getScoreList().get(i).getGrade() + "입니다.");
+                    }
+                    break;
+                }
+            }
+            if (!flag) {
+                System.out.println("현재 학생이 수강하고 있는 과목이 아닙니다. 다시 과목을 선택해주세요.");
+            } else {
+                break;
+            }
+        }
+
         System.out.println("\n등급 조회 성공!");
     }
 
