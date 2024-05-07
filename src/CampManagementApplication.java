@@ -1,5 +1,6 @@
 package TeamProject.src;
 
+import TeamProject.src.model.Score;
 import TeamProject.src.model.Student;
 import TeamProject.src.model.Subject;
 
@@ -39,7 +40,7 @@ public class CampManagementApplication {
             student1.getSubjectList().get(0).setScore(1, 80, 'C'); // 0번째 과목에 점수 입력
             student1.getSubjectList().get(0).setScore(2, 92, 'B'); // 근데 학생의 과목별로 입력이 안되고 같이 입력되는 문제있음
             student1.getSubjectList().get(1).setScore(1, 63, 'F'); // 현재 0번 과목(Java)에 1번 학생 점수랑 2번 학생 점수가 같이 저장됨
-            student1.getSubjectList().get(2).setScore(1, 74, 'D'); // 학생별로 SubjectList는 있으나 그 안에 객체가 공유되고 있는 상황인 것 같음
+            student1.getSubjectList().get(1).setScore(2, 74, 'D'); // 학생별로 SubjectList는 있으나 그 안에 객체가 공유되고 있는 상황인 것 같음
 
             // 이렇게 과목을 넣을 때 Subject를 새로 생성하면 문제 해결되나 모든 학생이 수강 신청을 할 때마다
             // 이렇게 생성을 하기에는 구조가 별로임
@@ -54,7 +55,7 @@ public class CampManagementApplication {
             student2.getSubjectList().get(0).setScore(1, 81, 'C');
             student2.getSubjectList().get(0).setScore(2, 76, 'D');
             student2.getSubjectList().get(1).setScore(1, 99, 'A');
-            student2.getSubjectList().get(2).setScore(1, 90, 'B');
+            student2.getSubjectList().get(2).setScore(2, 90, 'B');
 
             studentStore.add(student1); // 완성된 학생 정보를 전체 학생 List에 저장
             studentStore.add(student2);
@@ -250,15 +251,79 @@ public class CampManagementApplication {
 
     // 조회용 학생 ID받아오는 메서드 (수정 X)
     private static String getStudentId() {
+        //수강생 조회 출력
+        inquireStudent();
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }
 
     // 수강생의 과목별 시험 회차 및 점수 등록 (효진님 파트)
     private static void createScore() {
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        System.out.println("시험 점수를 등록합니다...");
-        // 기능 구현
+        // 관리할 수강생 고유 번호
+        String studentId = getStudentId();
+        List<Subject> subList = null;
+        Subject sub = null;
+
+        System.out.println("점수를 등록할 과목을 선택하시오");
+        // 해당 수강생이 듣는 과목 출력
+        for (Student s : studentStore) {
+            if (studentId.equals(s.getStudentId())) {
+                subList = s.getSubjectList();
+                subList.forEach(n -> System.out.print(n.getSubjectName() + " "));
+                System.out.println();
+                break;
+            }
+        }
+        // 과목 선택
+        while (true) {
+            String subName = sc.next();
+            boolean flag = false;
+            for (Subject s : subList) {
+                if (s.getSubjectName().equals(subName)) {
+                    sub = s;
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                System.out.println("현재 학생이 수강하고 있는 과목이 아닙니다. 다시 과목을 선택해주세요.");
+            } else {
+                break;
+            }
+        }
+        // 해당 과목 회차별 등급 출력
+        List<Integer> roundList = sub.printScore();
+
+        System.out.println("시험 점수를 새로 등록할 회차를 입력해주세요.");
+        // 몇 회차입력 받기
+        int round = 0;
+        while (true) {
+            round = sc.nextInt();
+            // 이미 있는 회차이면 예외처리해서 다시 받기
+            if (roundList.contains(round)) {
+                System.out.println("이미 등록된 회차입니다. 등록되지 않은 회차를 선택해주세요.");
+            } else if (1 > round || round > 10) {
+                System.out.println("1 ~ 10 회차만 등록이 가능합니다. 올바른 범위의 회차를 입력해주세요. ");
+            } else {
+                break;
+            }
+        }
+        // 점수 입력받기
+        System.out.println("등록할 점수를 입력해주세요.");
+        int score = 0;
+        while (true) {
+            score = sc.nextInt();
+            // 점수 범위를 벗어나면 예외처리해서 다시 받기
+            if (score < 0 || score > 100) {
+                System.out.println("점수는 0 ~ 100 사이의 숫자입니다. 올바른 점수를 입력해주세요. ");
+            } else {
+                break;
+            }
+        }
+        // 받은 점수를 통해 등급 계산
+        // 회차, 점수, 등급을 수강생의 해당 과목 정보에 추가
+        sub.makeGrade(score, round);
+
         System.out.println("\n점수 등록 성공!");
     }
 

@@ -42,4 +42,48 @@ public class Subject {
         score.setGrade(grade);
         scoreList.add(score); // 완성된 score를 List에 저장
     }
+
+    // 정효진 수정 -> 해당 과목의 점수가 등록되어 있는 회차 출력 함수
+    public List<Integer> printScore() {
+        System.out.println("현재 점수가 등록되어 있는 회차입니다.");
+        List<Integer> roundList = new ArrayList<>();
+        for (Score s : this.getScoreList()) {
+            roundList.add(s.getRound());
+            System.out.print(s.getRound() + "회차 ");
+        }
+        System.out.println();
+        return roundList;
+    }
+
+    public void makeGrade(int score, int round) {
+        if (this.getSubjectType() == "MANDATORY") { // 필수 과목일 경우
+            if (95 <= score && score <= 100) {
+                this.setScore(round, score, 'A');
+            } else if (90 <= score && score <= 94) {
+                this.setScore(round, score, 'B');
+            } else if (80 <= score && score <= 89) {
+                this.setScore(round, score, 'C');
+            } else if (70 <= score && score <= 79) {
+                this.setScore(round, score, 'D');
+            } else if (60 <= score && score <= 69) {
+                this.setScore(round, score, 'F');
+            } else {
+                this.setScore(round, score, 'N');
+            }
+        } else { // 선택 과목일 경우
+            if (90 <= score && score <= 100) {
+                this.setScore(round, score, 'A');
+            } else if (80 <= score && score <= 89) {
+                this.setScore(round, score, 'B');
+            } else if (70 <= score && score <= 79) {
+                this.setScore(round, score, 'C');
+            } else if (60 <= score && score <= 69) {
+                this.setScore(round, score, 'D');
+            } else if (50 <= score && score <= 59) {
+                this.setScore(round, score, 'F');
+            } else {
+                this.setScore(round, score, 'N');
+            }
+        }
+    }
 }
