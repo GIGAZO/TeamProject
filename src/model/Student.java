@@ -12,7 +12,7 @@ public class Student {
     public Student(String seq, String studentName) {
         this.studentId = seq; // 입력받은 값 저장
         this.studentName = studentName;
-        subjectList = new ArrayList<>(); // List 객체 초기화
+        this.subjectList = new ArrayList<>(); // List 객체 초기화
     }
 
     // getter setter
