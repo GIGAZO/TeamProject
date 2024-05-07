@@ -296,18 +296,34 @@ public class CampManagementApplication {
 
         System.out.println("시험 점수를 새로 등록할 회차를 입력해주세요.");
         // 몇 회차입력 받기
+        int round = 0;
         while (true) {
-            int round = sc.nextInt();
+            round = sc.nextInt();
+            // 이미 있는 회차이면 예외처리해서 다시 받기
             if (roundList.contains(round)) {
                 System.out.println("이미 등록된 회차입니다. 등록되지 않은 회차를 선택해주세요.");
+            } else if (1 > round || round > 10) {
+                System.out.println("1 ~ 10 회차만 등록이 가능합니다. 올바른 범위의 회차를 입력해주세요. ");
             } else {
                 break;
             }
         }
         // 점수 입력받기
-        // 이미 있는 회차이면 예외처리해서 다시 받기
+        System.out.println("등록할 점수를 입력해주세요.");
+        int score = 0;
+        while (true) {
+            score = sc.nextInt();
+            // 점수 범위를 벗어나면 예외처리해서 다시 받기
+            if (score < 0 || score > 100) {
+                System.out.println("점수는 0 ~ 100 사이의 숫자입니다. 올바른 점수를 입력해주세요. ");
+            } else {
+                break;
+            }
+        }
         // 받은 점수를 통해 등급 계산
         // 회차, 점수, 등급을 수강생의 해당 과목 정보에 추가
+        sub.makeGrade(score, round);
+
         System.out.println("\n점수 등록 성공!");
     }
 

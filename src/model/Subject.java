@@ -54,4 +54,36 @@ public class Subject {
         System.out.println();
         return roundList;
     }
+
+    public void makeGrade(int score, int round) {
+        if (this.getSubjectType() == "MANDATORY") { // 필수 과목일 경우
+            if (95 <= score && score <= 100) {
+                this.setScore(round, score, 'A');
+            } else if (90 <= score && score <= 94) {
+                this.setScore(round, score, 'B');
+            } else if (80 <= score && score <= 89) {
+                this.setScore(round, score, 'C');
+            } else if (70 <= score && score <= 79) {
+                this.setScore(round, score, 'D');
+            } else if (60 <= score && score <= 69) {
+                this.setScore(round, score, 'F');
+            } else {
+                this.setScore(round, score, 'N');
+            }
+        } else { // 선택 과목일 경우
+            if (90 <= score && score <= 100) {
+                this.setScore(round, score, 'A');
+            } else if (80 <= score && score <= 89) {
+                this.setScore(round, score, 'B');
+            } else if (70 <= score && score <= 79) {
+                this.setScore(round, score, 'C');
+            } else if (60 <= score && score <= 69) {
+                this.setScore(round, score, 'D');
+            } else if (50 <= score && score <= 59) {
+                this.setScore(round, score, 'F');
+            } else {
+                this.setScore(round, score, 'N');
+            }
+        }
+    }
 }
