@@ -232,7 +232,8 @@ public class CampManagementApplication {
             System.out.println("1. 수강생의 과목별 시험 회차 및 점수 등록");
             System.out.println("2. 수강생의 과목별 회차 점수 수정");
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
-            System.out.println("4. 메인 화면 이동");
+            System.out.println("4. 수강생의 과목별 평균 등급 조회");
+            System.out.println("5. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
@@ -240,7 +241,8 @@ public class CampManagementApplication {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
                 case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
-                case 4 -> flag = false; // 메인 화면 이동
+                case 4 -> inquireSubjectAverageByStudent(); // 수강생의 과목별 평균 등급 조회
+                case 5 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -256,16 +258,8 @@ public class CampManagementApplication {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }
-
-    // 수강생의 과목별 시험 회차 및 점수 등록 (효진님 파트)
-    private static void createScore() {
-        // 관리할 수강생 고유 번호
-        String studentId = getStudentId();
-        List<Subject> subList = null;
-        Subject sub = null;
-
-        System.out.println("점수를 등록할 과목을 선택하시오");
-        // 해당 수강생이 듣는 과목 출력
+    private static List<Subject> printSubjectByStudent(String studentId) {
+        List<Subject> subList = new ArrayList<>();
         for (Student s : studentStore) {
             if (studentId.equals(s.getStudentId())) {
                 subList = s.getSubjectList();
@@ -274,6 +268,18 @@ public class CampManagementApplication {
                 break;
             }
         }
+        return subList;
+    }
+
+    // 수강생의 과목별 시험 회차 및 점수 등록 (효진님 파트)
+    private static void createScore() {
+        // 관리할 수강생 고유 번호
+        String studentId = getStudentId();
+        Subject sub = null;
+
+        System.out.println("점수를 등록할 과목을 선택하시오");
+        // 해당 수강생이 듣는 과목 출력
+        List<Subject> subList = printSubjectByStudent(studentId);
         // 과목 선택
         while (true) {
             String subName = sc.next();
@@ -407,17 +413,9 @@ public class CampManagementApplication {
         // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
     private static void inquireRoundGradeBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        List<Subject> subList = null;
         Subject sub = null;
 
-        for (Student s : studentStore) {
-            if (studentId.equals(s.getStudentId())) {
-                subList = s.getSubjectList();
-                subList.forEach(n -> System.out.print(n.getSubjectName() + " "));
-                System.out.println();
-                break;
-            }
-        }
+        List<Subject> subList = printSubjectByStudent(studentId);
 
         System.out.println("점수를 조회할 과목을 선택하시오");
 
