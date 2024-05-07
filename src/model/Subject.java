@@ -90,7 +90,7 @@ public class Subject {
         this.setScore(round, score, grade); // 등급을 설정한 뒤에 점수를 저장
         return grade;
     }
-}
+
 
     // 과목별 평균 등급 산정
     public void averageGrade() {
@@ -132,7 +132,7 @@ public class Subject {
                 System.out.println("N");
             }
         }
-
     }
 }
+
 
