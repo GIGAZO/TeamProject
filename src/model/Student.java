@@ -37,4 +37,5 @@ public class Student {
     public void setSubjectList(Subject listen) {
         subjectList.add(listen);
     }
+
 }

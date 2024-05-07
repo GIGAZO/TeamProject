@@ -259,12 +259,13 @@ public class CampManagementApplication {
 
     // 수강생의 과목별 시험 회차 및 점수 등록 (효진님 파트)
     private static void createScore() {
+        // 관리할 수강생 고유 번호
         String studentId = getStudentId();
         List<Subject> subList = null;
         Subject sub = null;
-        // 관리할 수강생 고유 번호
-        // 해당 수강생이 듣는 과목 출력
+
         System.out.println("점수를 등록할 과목을 선택하시오");
+        // 해당 수강생이 듣는 과목 출력
         for (Student s : studentStore) {
             if (studentId.equals(s.getStudentId())) {
                 subList = s.getSubjectList();
@@ -291,12 +292,8 @@ public class CampManagementApplication {
             }
         }
         // 해당 과목 회차별 등급 출력
-        System.out.println("현재 점수가 등록되어 있는 회차입니다.");
-        List<Integer> roundList = new ArrayList<>();
-        for (Score s : sub.getScoreList()) {
-            roundList.add(s.getRound());
-            System.out.print(s.getRound() + "회차 ");
-        }
+        List<Integer> roundList = sub.printScore();
+
         System.out.println("시험 점수를 새로 등록할 회차를 입력해주세요.");
         // 몇 회차입력 받기
         while (true) {
