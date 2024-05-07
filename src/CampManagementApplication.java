@@ -220,9 +220,11 @@ public class CampManagementApplication {
     // 수강생 목록 조회 (승훈님 파트)
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
+        System.out.println();
         for(Student student : studentStore) {
-            System.out.println(student.getStudentId());
-            System.out.println(student.getStudentName());
+            System.out.println("학생 고유번호 : " + student.getStudentId());
+            System.out.println("학생 이름 : " + student.getStudentName());
+            System.out.println();
         }
         // 기능 구현
         System.out.println("\n수강생 목록 조회 성공!");
