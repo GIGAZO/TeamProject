@@ -232,7 +232,8 @@ public class CampManagementApplication {
             System.out.println("1. 수강생의 과목별 시험 회차 및 점수 등록");
             System.out.println("2. 수강생의 과목별 회차 점수 수정");
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
-            System.out.println("4. 메인 화면 이동");
+            System.out.println("4. 수강생의 과목별 평균 등급 조회");
+            System.out.println("5. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
@@ -240,7 +241,8 @@ public class CampManagementApplication {
                 case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
                 case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
-                case 4 -> flag = false; // 메인 화면 이동
+                case 4 -> inquireSubjectAverageByStudent(); // 수강생의 과목별 평균 등급 조회
+                case 5 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -404,4 +406,21 @@ public class CampManagementApplication {
         System.out.println("\n등급 조회 성공!");
     }
 
+    // 수강생의 과목별 평균 등급 조회 (효진님 파트)
+    private static void inquireSubjectAverageByStudent(){
+        String studentId = getStudentId();
+        List<Subject> subList = null;
+
+        // 해당 학생이 듣는 과목 찾기
+        for (Student s : studentStore) {
+            if (studentId.equals(s.getStudentId())) {
+                subList = s.getSubjectList();
+                break;
+            }
+        }
+
+        for (Subject sub : subList) {
+            sub.averageGrade();
+        }
+    }
 }

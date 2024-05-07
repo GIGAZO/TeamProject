@@ -55,6 +55,7 @@ public class Subject {
         return roundList;
     }
 
+    // 회차별 점수 등급 산정
     public void makeGrade(int score, int round) {
         if (this.getSubjectType() == "MANDATORY") { // 필수 과목일 경우
             if (95 <= score && score <= 100) {
@@ -86,4 +87,48 @@ public class Subject {
             }
         }
     }
+
+    // 과목별 평균 등급 산정
+    public void averageGrade() {
+        System.out.print(this.getSubjectName() + " 의 평균 등급 : ");
+        List<Score> scoreList = this.getScoreList();
+        String subjectType = this.getSubjectType();
+        double sum = 0;
+        int size = scoreList.size();
+        for (Score score : scoreList) {
+            sum += score.getScore();
+        }
+        double average = sum / size;
+        if (subjectType == "MANDATORY") {// 필수 과목일 경우
+            if (95 <= average && average <= 100) {
+                System.out.println("A");
+            } else if (90 <= average && average <= 94) {
+                System.out.println("B");
+            } else if (80 <= average && average <= 89) {
+                System.out.println("C");
+            } else if (70 <= average && average <= 79) {
+                System.out.println("D");
+            } else if (60 <= average && average <= 69) {
+                System.out.println("F");
+            } else {
+                System.out.println("N");
+            }
+        } else { // 선택 과목일 경우
+            if (90 <= average && average <= 100) {
+                System.out.println("A");
+            } else if (80 <= average && average <= 89) {
+                System.out.println("B");
+            } else if (70 <= average && average <= 79) {
+                System.out.println("C");
+            } else if (60 <= average && average <= 69) {
+                System.out.println("D");
+            } else if (50 <= average && average <= 59) {
+                System.out.println("F");
+            } else {
+                System.out.println("N");
+            }
+        }
+
+    }
 }
+
