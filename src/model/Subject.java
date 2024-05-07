@@ -14,7 +14,7 @@ public class Subject {
         this.subjectId = seq;
         this.subjectName = subjectName;
         this.subjectType = subjectType;
-        scoreList = new ArrayList<>(); // 전체 점수 저장 List 초기화
+        this.scoreList = new ArrayList<>(); // 전체 점수 저장 List 초기화
     }
 
     // Getter
