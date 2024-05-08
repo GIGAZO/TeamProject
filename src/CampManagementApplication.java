@@ -190,14 +190,16 @@ public class CampManagementApplication {
             System.out.println("수강생 관리 실행 중...");
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 목록 조회");
-            System.out.println("3. 메인 화면 이동");
+            System.out.println("3. 상태별 수강생 목록 조회");
+            System.out.println("4. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
             switch (input) {
                 case 1 -> createStudent(); // 수강생 등록
                 case 2 -> inquireStudent(); // 수강생 목록 조회
-                case 3 -> flag = false; // 메인 화면 이동
+                case 3 -> inquireSubjectsByStudentStatus();
+                case 4 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -285,6 +287,34 @@ public class CampManagementApplication {
         System.out.println("\n수강생 목록 조회 성공!");
     }
 
+    // 상태별 수강생 목록 조회 (효진님 파트)
+    private static void inquireSubjectsByStudentStatus() {
+        System.out.println("조회하고 싶은 수강생의 상태를 입력해주세요.");
+        System.out.println("green, red, yellow -> 3 가지의 상태 중 하나를 입력해주세요.");
+        while (true) {
+            String studentStatus = sc.next();
+            if (studentStatus.equals("green") || studentStatus.equals("red") || studentStatus.equals("yellow")) {
+                System.out.println(studentStatus + "상태인 수강생들을 조회합니다.");
+                System.out.println("-------------------------------------");
+//                for (Student student : studentStore) {
+//                    if (student.getStudentStutus().equals(studentStatus)) {
+//                        // 승훈님 파트 student에 함수 만들어서 같이 사용하기!
+//                        System.out.println("학생 고유번호 : " + student.getStudentId());
+//                        System.out.println("학생 이름 : " + student.getStudentName());
+//                        System.out.print("선택한 과목명 : ");
+//                        for (Subject subject : student.getSubjectList()) {
+//                            System.out.println(subject.getSubjectId() + " " + subject.getSubjectName());
+//                        }
+//                        System.out.println("-------------------------------------");
+//                    }
+//                }
+                break;
+            } else {
+                System.out.println("올바르지 않는 입력이 들어왔습니다. green, red, yellow -> 3 가지의 상태 중 하나를 입력해주세요.");
+            }
+        }
+    }
+
     private static void displayScoreView() {
         boolean flag = true;
         while (flag) {
@@ -319,6 +349,8 @@ public class CampManagementApplication {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }
+
+    // 수강생이 선택한 과목 리스트 출력
     private static List<Subject> printSubjectByStudent(String studentId) {
         List<Subject> subList = new ArrayList<>();
         for (Student s : studentStore) {
@@ -516,6 +548,7 @@ public class CampManagementApplication {
             }
         }
 
+        // 과목별 평균 등급 산정 후 출력
         for (Subject sub : subList) {
             sub.averageGrade();
         }
