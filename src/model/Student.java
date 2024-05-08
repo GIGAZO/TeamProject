@@ -7,12 +7,14 @@ public class Student {
     private String studentId; // 고유번호
     private String studentName; // 이름
     private List<Subject> subjectList; // 수강 과목 저장용 List 객체
+    private List<Score> scoreList;
 
 
     public Student(String seq, String studentName) {
         this.studentId = seq; // 입력받은 값 저장
         this.studentName = studentName;
         this.subjectList = new ArrayList<>(); // List 객체 초기화
+        this.scoreList = new ArrayList<>(); // List 객체 초기화
     }
 
     // getter setter
@@ -38,4 +40,11 @@ public class Student {
         subjectList.add(listen);
     }
 
+    public List<Score> getScoreList() {
+        return scoreList;
+    }
+
+    public void setScoreList(List<Score> scoreList) {
+        this.scoreList = scoreList;
+    }
 }
