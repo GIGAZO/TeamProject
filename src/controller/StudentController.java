@@ -22,7 +22,8 @@ public class StudentController {
     Scanner sc = new Scanner(System.in);
 
     // 수강생 등록 (상윤님 파트)
-    public void createStudent(List<Student> studentStore, List<Subject> subjectStore) {
+    public List<Student> createStudent(List<Student> studentStore, List<Subject> subjectStore) {
+        //void 말고 list<student>
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
@@ -40,6 +41,8 @@ public class StudentController {
 
         studentStore.add(newStudent);
         System.out.println("수강생 등록 성공!\n");
+
+        return studentStore;
     }
 
     public void selectSubjects(Student student, String subjectType, int minimumSubjects, List<Subject> subjectStore) {

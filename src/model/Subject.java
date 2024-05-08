@@ -14,7 +14,7 @@ public class Subject {
         this.subjectType = subjectType;
     }
 
-    // Getter Setter
+    // Getter
     public String getSubjectId() {
         return subjectId;
     }

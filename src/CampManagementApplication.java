@@ -32,6 +32,7 @@ public class CampManagementApplication {
     private static Scanner sc = new Scanner(System.in);
 
     private static StudentController studentController = new StudentController();
+    private static SubjectController subjectController = new SubjectController();
     private static ScoreController scoreController = new ScoreController();
 
 
