@@ -34,7 +34,7 @@ public class CampManagementApplication {
         setInitData(); // 데이터 저장소들 생성 메서드
         try {
             // 여기부터
-            Student student1 = new Student("1", "김예찬"); // 학생1 객체 생성
+                    Student student1 = new Student("1", "김예찬"); // 학생1 객체 생성
             //student1.setSubjectList(subjectStore.get(0)); // 학생1의 수강 과목 입력
             student1.setSubjectList(subjectStore.get(1));
             student1.setSubjectList(subjectStore.get(2));
@@ -279,8 +279,16 @@ public class CampManagementApplication {
         System.out.println("\n수강생 목록을 조회합니다...");
         System.out.println("-------------------------------------");
         for(Student student : studentStore) {
+            String subjectlist = "";
+            for(int i = 0; i < student.getSubjectList().size(); i++) {
+                subjectlist += student.getSubjectList().get(i).getSubjectName();
+                if(i != student.getSubjectList().size() - 1) {
+                    subjectlist += ", ";
+                }
+            }
             System.out.println("학생 고유번호: " + student.getStudentId());
             System.out.println("학생 이름: " + student.getStudentName());
+            System.out.println("선택한 과목: " + subjectlist);
             System.out.println("-------------------------------------");
         }
         // 기능 구현
@@ -461,11 +469,46 @@ public class CampManagementApplication {
         System.out.print("\n수정할 과목 이름을 입력하세요: ");
         String subjectName = sc.next();
 
+        // 등록되어 있는 회차 목록 확인
+        List<Integer> registeredRounds = new ArrayList<>();
+        outerLoop:
+        for (Student student : studentStore) {
+            if (studentId.equals(student.getStudentId())) {
+                List<Subject> subjects = student.getSubjectList();
+                for (Subject sub : subjects) {
+                    if (subjectName.equals(sub.getSubjectName())) {
+                        List<Score> scores = sub.getScoreList();
+                        for (Score score : scores) {
+                            registeredRounds.add(score.getRound());
+                        }
+                        break outerLoop;
+                    }
+                }
+            }
+        }
+
+        System.out.println("현재 등록된 회차 목록: " + registeredRounds);
         System.out.print("수정할 회차를 입력하세요: ");
-        int round = sc.nextInt();
+        int round;
+        while (true) {
+            round = sc.nextInt();
+            if (!registeredRounds.contains(round)) {
+                System.out.print("등록되지 않은 회차입니다: 다시 입력하세요: ");
+            } else {
+                break;
+            }
+        }
 
         System.out.print("새로운 점수를 입력하세요: ");
-        int newScore = sc.nextInt();
+        int newScore;
+        while(true){
+            newScore = sc.nextInt();
+            if (newScore < 0 || newScore > 100) {
+                System.out.print("점수는 0 ~ 100 사이의 숫자입니다. 다시 입력해주세요: ");
+            } else {
+                break;
+            }
+        }
 
         // 해당 과목 및 회차를 가진 수강생의 점수 수정
         boolean scoreUpdate = false;
@@ -510,18 +553,18 @@ public class CampManagementApplication {
 
         List<Subject> subList = printSubjectByStudent(studentId);
 
-        System.out.println("점수를 조회할 과목을 선택하시오");
+        System.out.println("점수를 조회할 과목의 번호를 입력해주세요");
 
         // 과목 선택
         while (true) {
-            String subName = sc.next();
+            String subNum = sc.next();
             boolean flag = false;
             for (Subject s : subList) {
-                if (s.getSubjectName().equals(subName)) {
+                if (s.getSubjectId().equals(subNum)) {
                     sub = s;
                     flag = true;
                     for(int i = 0; i < sub.getScoreList().size(); i++){
-                        System.out.println(subName + "의 " + i + "회차 등급은 " + s.getScoreList().get(i).getGrade() + "입니다.");
+                        System.out.println(sub.getSubjectName() + "의 " + (i + 1) + "회차 등급은 " + s.getScoreList().get(i).getGrade() + "입니다.");
                     }
                     break;
                 }
