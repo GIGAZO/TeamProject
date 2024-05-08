@@ -21,26 +21,30 @@ public class StudentController {
 
     Scanner sc = new Scanner(System.in);
 
+
     // 수강생 등록 (상윤님 파트)
     public List<Student> createStudent(List<Student> studentStore, List<Subject> subjectStore) {
-        //void 말고 list<student>
-        System.out.println("\n수강생을 등록합니다...");
-        System.out.print("수강생 이름 입력: ");
+        System.out.println("==================================");
+        System.out.println("[수강생 등록]");
+        System.out.print("• 이름 : ");
         String studentName = sc.next();
-        //Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
 
         String studentId = sequence(INDEX_TYPE_STUDENT);
         Student newStudent = new Student(studentId, studentName);
 
         // 기능 구현 (필수 과목, 선택 과목)
-        System.out.println("필수 과목을 선택하세요. 최소 3개:");
+        System.out.println("• 필수과목(3개 이상)");
         selectSubjects(newStudent, SUBJECT_TYPE_MANDATORY, 3, subjectStore);
 
-        System.out.println("선택 과목을 선택하세요. 최소 2개:");
+        System.out.println("• 선택과목(2개 이상)");
         selectSubjects(newStudent, SUBJECT_TYPE_CHOICE, 2, subjectStore);
 
+        System.out.println("• 상태 선택");
+        selectStatus(newStudent);
+
         studentStore.add(newStudent);
-        System.out.println("수강생 등록 성공!\n");
+        System.out.println("수강생 등록 성공! 이 전 화면으로 돌아갑니다...");
+        System.out.println("==================================");
 
         return studentStore;
     }
@@ -51,15 +55,14 @@ public class StudentController {
                 .filter(subject -> subject.getSubjectType().equals(subjectType)) // 파라미터에 담긴 과목 타입으로 필터링(같은 것을 찾음)
                 .collect(Collectors.toList()); // 필터링의 결과를 다시 리스트로 담는 것 -> availableSubjects에 담김
         int count = 0;
-        System.out.println("과목을 선택하세요(번호 입력):");
+        //System.out.println("과목을 선택하세요(번호 입력):");
 
-        while (true) {
+        while (count < minimumSubjects || (count < choiceSubjects.size() && count >= minimumSubjects)) {
             // 선택지 생성, 과목을 리스트 형태로
             for (int i = 0; i < choiceSubjects.size(); i++) {
                 Subject sub = choiceSubjects.get(i);
                 System.out.println((i + 1) + ". " + sub.getSubjectName());
             }
-
 
             int choice = sc.nextInt() - 1; // 입력 받은 숫자에서 -1로 번호 조정
             if (choice >= 0 && choice < choiceSubjects.size()) {
@@ -67,21 +70,49 @@ public class StudentController {
                 if (!student.getSubjectList().contains(selectedSubject)) {
                     student.setSubjectList(selectedSubject);
                     count++;
-                    System.out.println(selectedSubject.getSubjectName() + " 과목이 추가되었습니다.");
+                    System.out.println(selectedSubject.getSubjectName() + "이(가) 추가되었습니다.");
                 } else {
-                    System.out.println("이미 선택된 과목입니다.");
+                    System.out.println("※ 이미 선택된 과목입니다.");
                 }
             } else {
-                System.out.println("잘못 입력되었습니다. 다시 선택해주세요.");
+                System.out.println("※ 잘못 입력되었습니다. 다시 선택해주세요.");
             }
 
-            if (count >= minimumSubjects) {
-                System.out.print("과목 더 추가하시겠습니까? (y/n): ");
+            if (count >= minimumSubjects && count < choiceSubjects.size()) {
+                System.out.print("과목을 더 추가하시겠습니까? (y/n): ");
                 String answer = sc.next();
+                //System.out.print("\n=======================================\n");
                 if (answer.equalsIgnoreCase("n")) {
                     break;
                 }
+            } else if (count == choiceSubjects.size()) {
+                //System.out.println("모든 선택 가능한 과목이 추가되었습니다.");
+                break;
             }
+        }
+    }
+
+    public void selectStatus(Student student) {
+        while (true) {
+            System.out.println("1. Green 2. Red 3. Yellow");
+            System.out.print("상태를 선택하세요: ");
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    student.setStatus("Green");
+                    break;
+                case 2:
+                    student.setStatus("Red");
+                    break;
+                case 3:
+                    student.setStatus("Yellow");
+                    break;
+                default:
+                    System.out.println("잘못된 선택입니다. 다시 선택해주세요.");
+                    continue;
+            }
+            System.out.println("선택된 상태: " + student.getStatus());
+            break;
         }
     }
 
