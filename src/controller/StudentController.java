@@ -85,21 +85,30 @@ public class StudentController {
         }
     }
 
-    public void inquireStudent() {
-//        System.out.println("\n수강생 목록을 조회합니다...");
-//        System.out.println("-------------------------------------");
-//        for(Student student : studentStore) {
-//            System.out.println("학생 고유번호: " + student.getStudentId());
-//            System.out.println("학생 이름: " + student.getStudentName());
-//            System.out.println("-------------------------------------");
-//        }
-//        // 기능 구현
-//        System.out.println("\n수강생 목록 조회 성공!");
+    // 수강생 목록 조회 (승훈님 파트)
+    public void inquireStudent(List<Student> studentStore) {
+        System.out.println("\n수강생 목록을 조회합니다...");
+        System.out.println("-------------------------------------");
+        for(Student student : studentStore) {
+            String subjectlist = "";
+            for(int i = 0; i < student.getSubjectList().size(); i++) {
+                subjectlist += student.getSubjectList().get(i).getSubjectName();
+                if(i != student.getSubjectList().size() - 1) {
+                    subjectlist += ", ";
+                }
+            }
+            System.out.println("학생 고유번호: " + student.getStudentId());
+            System.out.println("학생 이름: " + student.getStudentName());
+            System.out.println("선택한 과목: " + subjectlist);
+            System.out.println("-------------------------------------");
+        }
+        // 기능 구현
+        System.out.println("\n수강생 목록 조회 성공!");
     }
 
-    public String getStudentId() {
+    public String getStudentId(List<Student> studentStore) {
         //수강생 조회 출력
-        inquireStudent();
+        inquireStudent(studentStore);
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }

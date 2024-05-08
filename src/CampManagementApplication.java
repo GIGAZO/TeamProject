@@ -157,7 +157,7 @@ public class CampManagementApplication {
 
             switch (input) {
                 case 1 -> studentController.createStudent(studentStore,subjectStore); // 수강생 등록
-                case 2 -> inquireStudent(); // 수강생 목록 조회
+                case 2 -> studentController.inquireStudent(studentStore); // 수강생 목록 조회
                 case 3 -> inquireSubjectsByStudentStatus();
                 case 4 -> flag = false; // 메인 화면 이동
                 default -> {
@@ -166,26 +166,6 @@ public class CampManagementApplication {
                 }
             }
         }
-    }
-    // 수강생 목록 조회 (승훈님 파트)
-    private static void inquireStudent() {
-        System.out.println("\n수강생 목록을 조회합니다...");
-        System.out.println("-------------------------------------");
-        for(Student student : studentStore) {
-            String subjectlist = "";
-            for(int i = 0; i < student.getSubjectList().size(); i++) {
-                subjectlist += student.getSubjectList().get(i).getSubjectName();
-                if(i != student.getSubjectList().size() - 1) {
-                    subjectlist += ", ";
-                }
-            }
-            System.out.println("학생 고유번호: " + student.getStudentId());
-            System.out.println("학생 이름: " + student.getStudentName());
-            System.out.println("선택한 과목: " + subjectlist);
-            System.out.println("-------------------------------------");
-        }
-        // 기능 구현
-        System.out.println("\n수강생 목록 조회 성공!");
     }
 
     // 상태별 수강생 목록 조회 (효진님 파트)
