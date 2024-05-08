@@ -41,7 +41,7 @@ public class CampManagementApplication {
     public static void main(String[] args) {
         setInitData(); // 데이터 저장소들 생성 메서드
         try {
-            // 여기부터
+//            // 여기부터
 //                    Student student1 = new Student("1", "김예찬"); // 학생1 객체 생성
 //            //student1.setSubjectList(subjectStore.get(0)); // 학생1의 수강 과목 입력
 //            student1.setSubjectList(subjectStore.get(1));
@@ -81,8 +81,8 @@ public class CampManagementApplication {
 //                    System.out.println(studentStore.get(i).getSubjectList().get(j).getSubjectName() + "의 " + studentStore.get(i).getSubjectList().get(j).getScoreList().get(k));
 //                }
 //            }
-
-            // 과목 인덱스 번호 확인용 출력 (출력해보시려면 주석 풀어주세요)
+//
+//             과목 인덱스 번호 확인용 출력 (출력해보시려면 주석 풀어주세요)
 //            for (int i =0; i < subjectStore.size(); i++) {
 //                System.out.println("아이디 : " + subjectStore.get(i).getSubjectId());
 //                System.out.println("이름 : " + subjectStore.get(i).getSubjectName());
@@ -285,8 +285,16 @@ public class CampManagementApplication {
         System.out.println("\n수강생 목록을 조회합니다...");
         System.out.println("-------------------------------------");
         for(Student student : studentStore) {
+            String subjectlist = "";
+            for(int i = 0; i < student.getSubjectList().size(); i++) {
+                subjectlist += student.getSubjectList().get(i).getSubjectName();
+                if(i != student.getSubjectList().size() - 1) {
+                    subjectlist += ", ";
+                }
+            }
             System.out.println("학생 고유번호: " + student.getStudentId());
             System.out.println("학생 이름: " + student.getStudentName());
+            System.out.println("선택한 과목: " + subjectlist);
             System.out.println("-------------------------------------");
         }
         // 기능 구현
