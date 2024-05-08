@@ -78,7 +78,7 @@ public class StudentController {
             if (count >= minimumSubjects) {
                 System.out.print("과목 더 추가하시겠습니까? (y/n): ");
                 String answer = sc.next();
-                if (answer.equalsIgnoreCase("n") && choice == choiceSubjects.size()) {
+                if (answer.equalsIgnoreCase("n")) {
                     break;
                 }
             }
