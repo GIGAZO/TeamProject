@@ -186,8 +186,6 @@ public class ScoreController {
 //            System.out.println("수정할 점수를 찾지 못했습니다. 다시 시도해주세요.");
 //        }
 
-
-
     // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
     public void inquireRoundGradeBySubject() {
 //        String studentId = studentController.getStudentId(); // 관리할 수강생 고유 번호
@@ -223,21 +221,23 @@ public class ScoreController {
     }
 
     // 수강생의 과목별 평균 등급 조회 (효진님 파트)
-    public void inquireSubjectAverageByStudent(){
-//        String studentId = studentController.getStudentId();
-//        List<Subject> subList = null;
-//
-//        // 해당 학생이 듣는 과목 찾기
-//        for (Student s : studentStore) {
-//            if (studentId.equals(s.getStudentId())) {
-//                subList = s.getSubjectList();
-//                break;
-//            }
-//        }
-//
-//        for (Subject sub : subList) {
-//            sub.averageGrade();
-//        }
+    public void inquireSubjectAverageByStudent(List<Student> studentStore) {
+        String studentId = studentController.getStudentId();
+        List<Subject> subList = null;
+        Student student = null;
+
+        // 해당 학생이 듣는 과목 찾기
+        for (Student s : studentStore) {
+            if (studentId.equals(s.getStudentId())) {
+                student = s;
+                subList = s.getSubjectList();
+                break;
+            }
+        }
+
+        for (Subject sub : subList) {
+            averageGrade(sub, student);
+        }
     }
 
     // 정효진 수정 -> 해당 과목의 점수가 등록되어 있는 회차 출력 함수
@@ -295,45 +295,47 @@ public class ScoreController {
     }
 
 
-//    // 과목별 평균 등급 산정
-//    public void averageGrade() {
-//        System.out.print(this.getSubjectName() + " 의 평균 등급 : ");
-//        List<Score> scoreList = this.getScoreList();
-//        String subjectType = this.getSubjectType();
-//        double sum = 0;
-//        int size = scoreList.size();
-//        for (Score score : scoreList) {
-//            sum += score.getScore();
-//        }
-//        double average = sum / size;
-//        if (subjectType == "MANDATORY") {// 필수 과목일 경우
-//            if (95 <= average && average <= 100) {
-//                System.out.println("A");
-//            } else if (90 <= average && average <= 94) {
-//                System.out.println("B");
-//            } else if (80 <= average && average <= 89) {
-//                System.out.println("C");
-//            } else if (70 <= average && average <= 79) {
-//                System.out.println("D");
-//            } else if (60 <= average && average <= 69) {
-//                System.out.println("F");
-//            } else {
-//                System.out.println("N");
-//            }
-//        } else { // 선택 과목일 경우
-//            if (90 <= average && average <= 100) {
-//                System.out.println("A");
-//            } else if (80 <= average && average <= 89) {
-//                System.out.println("B");
-//            } else if (70 <= average && average <= 79) {
-//                System.out.println("C");
-//            } else if (60 <= average && average <= 69) {
-//                System.out.println("D");
-//            } else if (50 <= average && average <= 59) {
-//                System.out.println("F");
-//            } else {
-//                System.out.println("N");
-//            }
-//        }
-//    }
+    // 과목별 평균 등급 산정
+    public void averageGrade(Subject subject, Student student) {
+        System.out.print(subject.getSubjectName() + " 의 평균 등급 : ");
+        List<Score> scoreList = student.getScoreList();
+        double sum = 0;
+        int size = 0;
+        for (Score score : scoreList) {
+            if (score.getSubjectId().equals(subject.getSubjectId()) && score.getStudentId().equals(student.getStudentId())) {
+                sum += score.getScore();
+                size += 1;
+            }
+        }
+        double average = sum / size;
+        if (subject.getSubjectType() == "MANDATORY") {// 필수 과목일 경우
+            if (95 <= average && average <= 100) {
+                System.out.println("A");
+            } else if (90 <= average && average <= 94) {
+                System.out.println("B");
+            } else if (80 <= average && average <= 89) {
+                System.out.println("C");
+            } else if (70 <= average && average <= 79) {
+                System.out.println("D");
+            } else if (60 <= average && average <= 69) {
+                System.out.println("F");
+            } else {
+                System.out.println("N");
+            }
+        } else { // 선택 과목일 경우
+            if (90 <= average && average <= 100) {
+                System.out.println("A");
+            } else if (80 <= average && average <= 89) {
+                System.out.println("B");
+            } else if (70 <= average && average <= 79) {
+                System.out.println("C");
+            } else if (60 <= average && average <= 69) {
+                System.out.println("D");
+            } else if (50 <= average && average <= 59) {
+                System.out.println("F");
+            } else {
+                System.out.println("N");
+            }
+        }
+    }
 }
