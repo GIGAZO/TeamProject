@@ -233,7 +233,7 @@ public class CampManagementApplication {
                 case 1 -> scoreController.createScore(studentStore); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> scoreController.updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
                 case 3 -> scoreController.inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
-                case 4 -> scoreController.inquireSubjectAverageByStudent(); // 수강생의 과목별 평균 등급 조회
+                case 4 -> scoreController.inquireSubjectAverageByStudent(studentStore); // 수강생의 과목별 평균 등급 조회
                 case 5 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
