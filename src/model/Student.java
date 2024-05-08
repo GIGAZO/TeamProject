@@ -44,7 +44,5 @@ public class Student {
         return scoreList;
     }
 
-    public void setScoreList(Score score) {
-        this.scoreList.add(score);
-    }
+    public void setScoreList(Score score) { this.scoreList.add(score); }
 }

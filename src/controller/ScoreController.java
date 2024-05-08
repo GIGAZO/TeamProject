@@ -77,8 +77,6 @@ public class ScoreController {
 
     /* 수강생의 과목별 회차 점수 수정 (지우님 파트) */
     public void updateRoundScoreBySubject(List<Student> studentStore) {
-//        private static void updateRoundScoreBySubject () {
-//            String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 관리할 수강생 고유 번호
         String studentId = studentController.getStudentId();
         String subjectId = "";
@@ -131,87 +129,87 @@ public class ScoreController {
                 break;
             }
         }
-
-        System.out.print("새로운 점수를 입력하세요: ");
-        int newScore;
-        while(true){
-            newScore = sc.nextInt();
-            if (newScore < 0 || newScore > 100) {
-                System.out.print("점수는 0 ~ 100 사이의 숫자입니다. 다시 입력해주세요: ");
-            } else {
-                break;
+            System.out.print("새로운 점수를 입력하세요: ");
+            int newScore;
+            while (true) {
+                newScore = sc.nextInt();
+                if (newScore < 0 || newScore > 100) {
+                    System.out.print("점수는 0 ~ 100 사이의 숫자입니다. 다시 입력해주세요: ");
+                } else {
+                    break;
+                }
             }
-        }
 
-        // 해당 과목 및 회차를 가진 수강생의 점수 수정
-        boolean scoreUpdate = false;
-        for (Student currentStudent : studentStore) {
-            if (studentId.equals(currentStudent.getStudentId())) {
-                List<Subject> subjectList = currentStudent.getSubjectList();
-                for (Subject sub : subjectList) {
-                    if (subjectId.equals(sub.getSubjectId())) {
-                        List<Score> subScores = currentStudent.getScoreList();
-                        for (Score score : subScores) {
-                            if (round == score.getRound()) {
-                                // 이전 점수, 등급 저장
-                                int prevScore = score.getScore();
-                                char prevGrade = score.getGrade();
-                                // 점수, 등급 업데이트
-                                score.setScore(newScore);
-                                char newGrade = makeGrade(subjectId, student, newScore, round);
+            // 해당 과목 및 회차를 가진 수강생의 점수 수정
+            boolean scoreUpdate = false;
+            for (Student currentStudent : studentStore) {
+                if (studentId.equals(currentStudent.getStudentId())) {
+                    List<Subject> subjectList = currentStudent.getSubjectList();
+                    for (Subject sub : subjectList) {
+                        if (subjectId.equals(sub.getSubjectId())) {
+                            List<Score> subScores = currentStudent.getScoreList();
+                            for (Score score : subScores) {
+                                if (round == score.getRound()) {
+                                    // 이전 점수, 등급 저장
+                                    int prevScore = score.getScore();
+                                    char prevGrade = score.getGrade();
+                                    // 점수, 등급 업데이트
+                                    score.setScore(newScore);
+                                    char newGrade = makeGrade(subjectId, student, newScore, round);
 
-                                System.out.println("회차 " + round + "의 점수가 수정되었습니다.");
-                                System.out.println("수정된 과목: " + sub.getSubjectName());
-                                System.out.println("이전 점수: " + prevScore);
-                                System.out.println("수정된 점수: " + newScore);
-                                System.out.println("이전 등급: " + prevGrade);
-                                System.out.println("수정된 등급: " + newGrade);
+                                    System.out.println("회차 " + round + "의 점수가 수정되었습니다.");
+                                    System.out.println("수정된 과목: " + sub.getSubjectName());
+                                    System.out.println("이전 점수: " + prevScore);
+                                    System.out.println("수정된 점수: " + newScore);
+                                    System.out.println("이전 등급: " + prevGrade);
+                                    System.out.println("수정된 등급: " + newGrade);
 
-                                scoreUpdate = true;
-                                break;
+                                    scoreUpdate = true;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        if (!scoreUpdate) {
-            System.out.println("수정할 점수를 찾지 못했습니다. 다시 시도해주세요.");
+            if (!scoreUpdate) {
+                System.out.println("수정할 점수를 찾지 못했습니다. 다시 시도해주세요.");
+            }
         }
 
 
-        // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
-//    public void inquireRoundGradeBySubject() {
-//        String studentId = studentController.getStudentId(); // 관리할 수강생 고유 번호
-//        Subject sub = null;
-//
-//        // 효진 : 요기 함수 인자 바꿔서 그거에 맞춰서 코드 수정해주세요!
-//        List<Subject> subList = subjectController.printSubjectByStudent(studentId);
-//
-//        System.out.println("점수를 조회할 과목의 번호를 입력해주세요");
-//
-//        // 과목 선택
-//        while (true) {
-//            String subNum = sc.next();
-//            boolean flag = false;
-//            for (Subject s : subList) {
-//                if (s.getSubjectId().equals(subNum)) {
-//                    sub = s;
-//                    flag = true;
-////                    for(int i = 0; i < sub.getScoreList().size(); i++){
-////                        System.out.println(sub.getSubjectName() + "의 " + (i + 1) + "회차 등급은 " + s.getScoreList().get(i).getGrade() + "입니다.");
-////                    }
-////                    break;
-//                }
-//            }
-//            if (!flag) {
-//                System.out.println("현재 학생이 수강하고 있는 과목이 아닙니다. 다시 과목을 선택해주세요.");
-//            } else {
-//                break;
-//            }
-//        }
-//
-//        System.out.println("\n등급 조회 성공!");
+
+    // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
+    public void inquireRoundGradeBySubject(List<Student> studentStore) {
+        String studentId = studentController.getStudentId(); // 관리할 수강생 고유 번호
+        Subject sub = null;
+
+        Student student = subjectController.printSubjectByStudent(studentId, studentStore);
+
+        System.out.println("점수를 조회할 과목의 번호를 입력해주세요");
+
+        // 과목 선택
+        while (true) {
+            String subNum = sc.next();
+            boolean flag = false;
+            for (Subject s : student.getSubjectList()) {
+                if (s.getSubjectId().equals(subNum)) {
+                    sub = s;
+                    flag = true;
+                    for(int i = 0; i < student.getScoreList().size(); i++){
+                        System.out.println(sub.getSubjectName() + "의 " + (i + 1) + "회차 등급은 " + student.getScoreList().get(i).getGrade() + "입니다.");
+                    }
+                    break;
+                }
+            }
+            if (!flag) {
+                System.out.println("현재 학생이 수강하고 있는 과목이 아닙니다. 다시 과목을 선택해주세요.");
+            } else {
+                break;
+            }
+        }
+
+        System.out.println("\n등급 조회 성공!");
     }
 
     // 수강생의 과목별 평균 등급 조회 (효진님 파트)

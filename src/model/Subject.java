@@ -26,6 +26,12 @@ public class Subject {
     public String getSubjectType() {
         return subjectType;
     }
+
+    public void setSubjectId(String subjectId) { this.subjectId = subjectId; }
+
+    public void setSubjectName(String subjectName) { this.subjectName = subjectName; }
+
+    public void setSubjectType(String subjectType) { this.subjectType = subjectType; }
 }
 
 
