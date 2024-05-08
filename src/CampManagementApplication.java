@@ -34,7 +34,7 @@ public class CampManagementApplication {
         setInitData(); // 데이터 저장소들 생성 메서드
         try {
             // 여기부터
-            Student student1 = new Student("1", "김예찬"); // 학생1 객체 생성
+                    Student student1 = new Student("1", "김예찬"); // 학생1 객체 생성
             //student1.setSubjectList(subjectStore.get(0)); // 학생1의 수강 과목 입력
             student1.setSubjectList(subjectStore.get(1));
             student1.setSubjectList(subjectStore.get(2));
@@ -485,18 +485,18 @@ public class CampManagementApplication {
 
         List<Subject> subList = printSubjectByStudent(studentId);
 
-        System.out.println("점수를 조회할 과목을 선택하시오");
+        System.out.println("점수를 조회할 과목의 번호를 입력해주세요");
 
         // 과목 선택
         while (true) {
-            String subName = sc.next();
+            String subNum = sc.next();
             boolean flag = false;
             for (Subject s : subList) {
-                if (s.getSubjectName().equals(subName)) {
+                if (s.getSubjectId().equals(subNum)) {
                     sub = s;
                     flag = true;
                     for(int i = 0; i < sub.getScoreList().size(); i++){
-                        System.out.println(subName + "의 " + i + "회차 등급은 " + s.getScoreList().get(i).getGrade() + "입니다.");
+                        System.out.println(sub.getSubjectName() + "의 " + (i + 1) + "회차 등급은 " + s.getScoreList().get(i).getGrade() + "입니다.");
                     }
                     break;
                 }
