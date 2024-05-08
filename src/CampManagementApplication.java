@@ -432,7 +432,15 @@ public class CampManagementApplication {
         int round = sc.nextInt();
 
         System.out.print("새로운 점수를 입력하세요: ");
-        int newScore = sc.nextInt();
+        int newScore;
+        while(true){
+            newScore = sc.nextInt();
+            if (newScore < 0 || newScore > 100) {
+                System.out.println("점수는 0 ~ 100 사이의 숫자입니다. 다시 입력해주세요. ");
+            } else {
+                break;
+            }
+        }
 
         // 해당 과목 및 회차를 가진 수강생의 점수 수정
         boolean scoreUpdate = false;
