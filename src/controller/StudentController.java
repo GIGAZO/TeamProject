@@ -28,6 +28,7 @@ public class StudentController {
         System.out.println("[수강생 등록]");
         System.out.print("• 이름 : ");
         String studentName = sc.next();
+        System.out.println("\n");
 
         String studentId = sequence(INDEX_TYPE_STUDENT);
         Student newStudent = new Student(studentId, studentName);
@@ -36,15 +37,18 @@ public class StudentController {
         System.out.println("• 필수과목(3개 이상)");
         selectSubjects(newStudent, SUBJECT_TYPE_MANDATORY, 3, subjectStore);
 
+        System.out.println("\n");
         System.out.println("• 선택과목(2개 이상)");
         selectSubjects(newStudent, SUBJECT_TYPE_CHOICE, 2, subjectStore);
 
+        System.out.println("\n");
         System.out.println("• 상태 선택");
         selectStatus(newStudent);
 
+        System.out.println("\n");
         studentStore.add(newStudent);
         System.out.println("수강생 등록 성공! 이 전 화면으로 돌아갑니다...");
-        System.out.println("==================================");
+        //System.out.println("==================================");
 
         return studentStore;
     }
@@ -90,6 +94,24 @@ public class StudentController {
                 break;
             }
         }
+
+        // 선택된 과목 리스트 출력
+        //System.out.println("선택된 과목:");
+        //student.getSubjectList().forEach(subject -> System.out.println("• " + subject.getSubjectName()));
+
+        // 선택된 과목 리스트 출력
+        List<String> mandatorySubjects = student.getSubjectList().stream()
+                .filter(subject -> subject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY))
+                .map(Subject::getSubjectName)
+                .collect(Collectors.toList());
+
+        List<String> choiSubjects = student.getSubjectList().stream()
+                .filter(subject -> subject.getSubjectType().equals(SUBJECT_TYPE_CHOICE))
+                .map(Subject::getSubjectName)
+                .collect(Collectors.toList());
+
+        System.out.println("선택된 필수 과목: " + String.join(", ", mandatorySubjects));
+        System.out.println("선택된 선택 과목: " + String.join(", ", choiSubjects));
     }
 
     public void selectStatus(Student student) {
@@ -108,7 +130,7 @@ public class StudentController {
                     student.setStatus("Yellow");
                     break;
                 default:
-                    System.out.println("잘못된 선택입니다. 다시 선택해주세요.");
+                    System.out.println("잘못 입력되었습니다.. 다시 선택해주세요.");
                     continue;
             }
             System.out.println("선택된 상태: " + student.getStatus());
