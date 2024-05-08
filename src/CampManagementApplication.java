@@ -277,8 +277,16 @@ public class CampManagementApplication {
         System.out.println("\n수강생 목록을 조회합니다...");
         System.out.println("-------------------------------------");
         for(Student student : studentStore) {
+            String subjectlist = "";
+            for(int i = 0; i < student.getSubjectList().size(); i++) {
+                subjectlist += student.getSubjectList().get(i).getSubjectName();
+                if(i != student.getSubjectList().size() - 1) {
+                    subjectlist += ", ";
+                }
+            }
             System.out.println("학생 고유번호: " + student.getStudentId());
             System.out.println("학생 이름: " + student.getStudentName());
+            System.out.println("선택한 과목: " + subjectlist);
             System.out.println("-------------------------------------");
         }
         // 기능 구현
