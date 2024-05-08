@@ -223,20 +223,15 @@ public class ScoreController {
     // 수강생의 과목별 평균 등급 조회 (효진님 파트)
     public void inquireSubjectAverageByStudent(List<Student> studentStore) {
         String studentId = studentController.getStudentId();
-        List<Subject> subList = null;
-        Student student = null;
 
         // 해당 학생이 듣는 과목 찾기
         for (Student s : studentStore) {
             if (studentId.equals(s.getStudentId())) {
-                student = s;
-                subList = s.getSubjectList();
+                for (Subject sub : s.getSubjectList()) {
+                    averageGrade(sub, s);
+                }
                 break;
             }
-        }
-
-        for (Subject sub : subList) {
-            averageGrade(sub, student);
         }
     }
 
@@ -298,10 +293,9 @@ public class ScoreController {
     // 과목별 평균 등급 산정
     public void averageGrade(Subject subject, Student student) {
         System.out.print(subject.getSubjectName() + " 의 평균 등급 : ");
-        List<Score> scoreList = student.getScoreList();
         double sum = 0;
         int size = 0;
-        for (Score score : scoreList) {
+        for (Score score : student.getScoreList()) {
             if (score.getSubjectId().equals(subject.getSubjectId()) && score.getStudentId().equals(student.getStudentId())) {
                 sum += score.getScore();
                 size += 1;
