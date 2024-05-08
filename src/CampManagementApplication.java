@@ -297,7 +297,7 @@ public class CampManagementApplication {
                 System.out.println(studentStatus + "상태인 수강생들을 조회합니다.");
                 System.out.println("-------------------------------------");
 //                for (Student student : studentStore) {
-//                    if (student.getStudentStutus().equals(studentStatus)) {
+//                    if (student.getStudentStatus().equals(studentStatus)) {
 //                        // 승훈님 파트 student에 함수 만들어서 같이 사용하기!
 //                        System.out.println("학생 고유번호 : " + student.getStudentId());
 //                        System.out.println("학생 이름 : " + student.getStudentName());
@@ -390,6 +390,7 @@ public class CampManagementApplication {
             }
         }
         // 해당 과목 회차별 등급 출력
+        System.out.print("이미 등록되어 있는 회차 : ");
         List<Integer> roundList = sub.printScore();
 
         System.out.println("시험 점수를 새로 등록할 회차(숫자만)를 입력해주세요.");
