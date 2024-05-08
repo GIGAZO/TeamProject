@@ -231,8 +231,8 @@ public class CampManagementApplication {
 
             switch (input) {
                 case 1 -> scoreController.createScore(studentStore); // 수강생의 과목별 시험 회차 및 점수 등록
-                case 2 -> scoreController.updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-                case 3 -> scoreController.inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
+                case 2 -> scoreController.updateRoundScoreBySubject(studentStore); // 수강생의 과목별 회차 점수 수정
+                //case 3 -> scoreController.inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
                 case 4 -> scoreController.inquireSubjectAverageByStudent(); // 수강생의 과목별 평균 등급 조회
                 case 5 -> flag = false; // 메인 화면 이동
                 default -> {
