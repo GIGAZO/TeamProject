@@ -10,7 +10,6 @@ import TeamProject.src.model.Subject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class CampManagementApplication {
     // 데이터 저장소
@@ -41,6 +40,10 @@ public class CampManagementApplication {
     public static void main(String[] args) {
         setInitData(); // 데이터 저장소들 생성 메서드
         try {
+            Student student1 = new Student("1", "김예찬");
+            studentStore.add(student1);
+            studentStore.get(0).setSubjectList(new Subject("SU1", "Java", SUBJECT_TYPE_MANDATORY));
+            studentStore.get(0).setScoreList(new Score(1, 90, 'A', "1", "SU1"));
 
             displayMainView(); // 실제 로직이 담긴 메서드
         } catch (Exception e) { // 예외처리
@@ -157,61 +160,13 @@ public class CampManagementApplication {
 
             switch (input) {
                 case 1 -> studentController.createStudent(studentStore,subjectStore); // 수강생 등록
-                case 2 -> inquireStudent(); // 수강생 목록 조회
-                case 3 -> inquireSubjectsByStudentStatus();
+                case 2 -> studentController.inquireStudent(); // 수강생 목록 조회
+                case 3 -> studentController.inquireSubjectsByStudentStatus();
                 case 4 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
                 }
-            }
-        }
-    }
-    // 수강생 목록 조회 (승훈님 파트)
-    private static void inquireStudent() {
-        System.out.println("\n수강생 목록을 조회합니다...");
-        System.out.println("-------------------------------------");
-        for(Student student : studentStore) {
-            String subjectlist = "";
-            for(int i = 0; i < student.getSubjectList().size(); i++) {
-                subjectlist += student.getSubjectList().get(i).getSubjectName();
-                if(i != student.getSubjectList().size() - 1) {
-                    subjectlist += ", ";
-                }
-            }
-            System.out.println("학생 고유번호: " + student.getStudentId());
-            System.out.println("학생 이름: " + student.getStudentName());
-            System.out.println("선택한 과목: " + subjectlist);
-            System.out.println("-------------------------------------");
-        }
-        // 기능 구현
-        System.out.println("\n수강생 목록 조회 성공!");
-    }
-
-    // 상태별 수강생 목록 조회 (효진님 파트)
-    private static void inquireSubjectsByStudentStatus() {
-        System.out.println("조회하고 싶은 수강생의 상태를 입력해주세요.");
-        System.out.println("green, red, yellow -> 3 가지의 상태 중 하나를 입력해주세요.");
-        while (true) {
-            String studentStatus = sc.next();
-            if (studentStatus.equals("green") || studentStatus.equals("red") || studentStatus.equals("yellow")) {
-                System.out.println(studentStatus + "상태인 수강생들을 조회합니다.");
-                System.out.println("-------------------------------------");
-//                for (Student student : studentStore) {
-//                    if (student.getStudentStatus().equals(studentStatus)) {
-//                        // 승훈님 파트 student에 함수 만들어서 같이 사용하기!
-//                        System.out.println("학생 고유번호 : " + student.getStudentId());
-//                        System.out.println("학생 이름 : " + student.getStudentName());
-//                        System.out.print("선택한 과목명 : ");
-//                        for (Subject subject : student.getSubjectList()) {
-//                            System.out.println(subject.getSubjectId() + " " + subject.getSubjectName());
-//                        }
-//                        System.out.println("-------------------------------------");
-//                    }
-//                }
-                break;
-            } else {
-                System.out.println("올바르지 않는 입력이 들어왔습니다. green, red, yellow -> 3 가지의 상태 중 하나를 입력해주세요.");
             }
         }
     }
@@ -231,8 +186,8 @@ public class CampManagementApplication {
 
             switch (input) {
                 case 1 -> scoreController.createScore(studentStore); // 수강생의 과목별 시험 회차 및 점수 등록
-                case 2 -> scoreController.updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-                case 3 -> scoreController.inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
+                case 2 -> scoreController.updateRoundScoreBySubject(studentStore); // 수강생의 과목별 회차 점수 수정
+                case 3 -> scoreController.inquireRoundGradeBySubject(studentStore); // 수강생의 특정 과목 회차별 등급 조회
                 case 4 -> scoreController.inquireSubjectAverageByStudent(); // 수강생의 과목별 평균 등급 조회
                 case 5 -> flag = false; // 메인 화면 이동
                 default -> {

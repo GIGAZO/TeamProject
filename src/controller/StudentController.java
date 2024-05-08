@@ -21,6 +21,8 @@ public class StudentController {
 
     Scanner sc = new Scanner(System.in);
 
+
+    // 수강생 등록 (상윤님 파트)
     public List<Student> createStudent(List<Student> studentStore, List<Subject> subjectStore) {
         System.out.println("==================================");
         System.out.println("[수강생 등록]");
@@ -136,16 +138,53 @@ public class StudentController {
         }
     }
 
+    // 수강생 목록 조회(승훈님 파트)
     public void inquireStudent() {
 //        System.out.println("\n수강생 목록을 조회합니다...");
 //        System.out.println("-------------------------------------");
 //        for(Student student : studentStore) {
+//            String subjectlist = "";
+//            for(int i = 0; i < student.getSubjectList().size(); i++) {
+//                subjectlist += student.getSubjectList().get(i).getSubjectName();
+//                if(i != student.getSubjectList().size() - 1) {
+//                    subjectlist += ", ";
+//                }
+//            }
 //            System.out.println("학생 고유번호: " + student.getStudentId());
 //            System.out.println("학생 이름: " + student.getStudentName());
+//            System.out.println("선택한 과목: " + subjectlist);
 //            System.out.println("-------------------------------------");
 //        }
 //        // 기능 구현
 //        System.out.println("\n수강생 목록 조회 성공!");
+    }
+
+    // 상태별 수강생 목록 조회 (효진님 파트)
+    public void inquireSubjectsByStudentStatus() {
+        System.out.println("조회하고 싶은 수강생의 상태를 입력해주세요.");
+        System.out.println("green, red, yellow -> 3 가지의 상태 중 하나를 입력해주세요.");
+        while (true) {
+            String studentStatus = sc.next();
+            if (studentStatus.equals("green") || studentStatus.equals("red") || studentStatus.equals("yellow")) {
+                System.out.println(studentStatus + "상태인 수강생들을 조회합니다.");
+                System.out.println("-------------------------------------");
+//                for (Student student : studentStore) {
+//                    if (student.getStudentStatus().equals(studentStatus)) {
+//                        // 승훈님 파트 student에 함수 만들어서 같이 사용하기!
+//                        System.out.println("학생 고유번호 : " + student.getStudentId());
+//                        System.out.println("학생 이름 : " + student.getStudentName());
+//                        System.out.print("선택한 과목명 : ");
+//                        for (Subject subject : student.getSubjectList()) {
+//                            System.out.println(subject.getSubjectId() + " " + subject.getSubjectName());
+//                        }
+//                        System.out.println("-------------------------------------");
+//                    }
+//                }
+                break;
+            } else {
+                System.out.println("올바르지 않는 입력이 들어왔습니다. green, red, yellow -> 3 가지의 상태 중 하나를 입력해주세요.");
+            }
+        }
     }
 
     public String getStudentId() {

@@ -44,6 +44,8 @@ public class Student {
     public List<Score> getScoreList() {
         return scoreList;
     }
+  
+    public void setScoreList(Score score) { this.scoreList.add(score); }
 
     public void setScoreList(Score score) {
         this.scoreList.add(score);
@@ -56,4 +58,5 @@ public class Student {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }
