@@ -324,8 +324,7 @@ public class CampManagementApplication {
         for (Student s : studentStore) {
             if (studentId.equals(s.getStudentId())) {
                 subList = s.getSubjectList();
-                subList.forEach(n -> System.out.print(n.getSubjectName() + " "));
-                System.out.println();
+                subList.forEach(n -> System.out.println(n.getSubjectId()+ " : "+ n.getSubjectName() + " "));
                 break;
             }
         }
@@ -343,10 +342,10 @@ public class CampManagementApplication {
         List<Subject> subList = printSubjectByStudent(studentId);
         // 과목 선택
         while (true) {
-            String subName = sc.next();
+            String subNum = sc.next();
             boolean flag = false;
             for (Subject s : subList) {
-                if (s.getSubjectName().equals(subName)) {
+                if (s.getSubjectId().equals(subNum)) {
                     sub = s;
                     flag = true;
                     break;
@@ -361,7 +360,7 @@ public class CampManagementApplication {
         // 해당 과목 회차별 등급 출력
         List<Integer> roundList = sub.printScore();
 
-        System.out.println("시험 점수를 새로 등록할 회차를 입력해주세요.");
+        System.out.println("시험 점수를 새로 등록할 회차(숫자만)를 입력해주세요.");
         // 몇 회차입력 받기
         int round = 0;
         while (true) {
@@ -370,7 +369,7 @@ public class CampManagementApplication {
             if (roundList.contains(round)) {
                 System.out.println("이미 등록된 회차입니다. 등록되지 않은 회차를 선택해주세요.");
             } else if (1 > round || round > 10) {
-                System.out.println("1 ~ 10 회차만 등록이 가능합니다. 올바른 범위의 회차를 입력해주세요. ");
+                System.out.println("1 ~ 10 회차만 등록이 가능합니다. 올바른 범위의 회차(숫자만)를 입력해주세요. ");
             } else {
                 break;
             }
