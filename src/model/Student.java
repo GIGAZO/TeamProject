@@ -37,14 +37,14 @@ public class Student {
     }
 
     public void setSubjectList(Subject listen) {
-        subjectList.add(listen);
+        this.subjectList.add(listen);
     }
 
     public List<Score> getScoreList() {
         return scoreList;
     }
 
-    public void setScoreList(List<Score> scoreList) {
-        this.scoreList = scoreList;
+    public void setScoreList(Score score) {
+        this.scoreList.add(score);
     }
 }
