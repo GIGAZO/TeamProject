@@ -428,15 +428,42 @@ public class CampManagementApplication {
         System.out.print("\n수정할 과목 이름을 입력하세요: ");
         String subjectName = sc.next();
 
+        // 등록되어 있는 회차 목록 확인
+        List<Integer> registeredRounds = new ArrayList<>();
+        outerLoop:
+        for (Student student : studentStore) {
+            if (studentId.equals(student.getStudentId())) {
+                List<Subject> subjects = student.getSubjectList();
+                for (Subject sub : subjects) {
+                    if (subjectName.equals(sub.getSubjectName())) {
+                        List<Score> scores = sub.getScoreList();
+                        for (Score score : scores) {
+                            registeredRounds.add(score.getRound());
+                        }
+                        break outerLoop;
+                    }
+                }
+            }
+        }
+
+        System.out.println("현재 등록된 회차 목록: " + registeredRounds);
         System.out.print("수정할 회차를 입력하세요: ");
-        int round = sc.nextInt();
+        int round;
+        while (true) {
+            round = sc.nextInt();
+            if (!registeredRounds.contains(round)) {
+                System.out.print("등록되지 않은 회차입니다: 다시 입력하세요: ");
+            } else {
+                break;
+            }
+        }
 
         System.out.print("새로운 점수를 입력하세요: ");
         int newScore;
         while(true){
             newScore = sc.nextInt();
             if (newScore < 0 || newScore > 100) {
-                System.out.println("점수는 0 ~ 100 사이의 숫자입니다. 다시 입력해주세요. ");
+                System.out.print("점수는 0 ~ 100 사이의 숫자입니다. 다시 입력해주세요: ");
             } else {
                 break;
             }
