@@ -6,6 +6,18 @@ public class Score {
     private int score; // 점수
     private char grade; // 등급
 
+    private String studentId;
+
+    private String subjectId;
+
+    public Score(int round, int score, char grade, String studentId, String subjectId) {
+        this.round = round;
+        this.score = score;
+        this.grade = grade;
+        this.studentId = studentId;
+        this.subjectId = subjectId;
+    }
+
     // getter setter
     public int getRound() {
         return round;
@@ -31,9 +43,19 @@ public class Score {
         this.grade = grade;
     }
 
-    // toString Override
-    @Override
-    public String toString() {
-        return round + "회차 점수는 " + score + "점이고 등급은 " + grade + "등급 입니다";
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(String subjectId) {
+        this.subjectId = subjectId;
     }
 }
