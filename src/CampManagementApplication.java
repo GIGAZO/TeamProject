@@ -34,7 +34,7 @@ public class CampManagementApplication {
         setInitData(); // 데이터 저장소들 생성 메서드
         try {
             // 여기부터
-                    Student student1 = new Student("1", "김예찬"); // 학생1 객체 생성
+            Student student1 = new Student("1", "김예찬"); // 학생1 객체 생성
             //student1.setSubjectList(subjectStore.get(0)); // 학생1의 수강 과목 입력
             student1.setSubjectList(subjectStore.get(1));
             student1.setSubjectList(subjectStore.get(2));
@@ -70,7 +70,7 @@ public class CampManagementApplication {
                 for (int j =0; j < studentStore.get(i).getSubjectList().size(); j++) {
                     System.out.println("수강중인 과목 : " + studentStore.get(i).getSubjectList().get(j).getSubjectName());
                     for (int k =0; k < studentStore.get(i).getSubjectList().get(j).getScoreList().size(); k++)
-                    System.out.println(studentStore.get(i).getSubjectList().get(j).getSubjectName() + "의 " + studentStore.get(i).getSubjectList().get(j).getScoreList().get(k));
+                        System.out.println(studentStore.get(i).getSubjectList().get(j).getSubjectName() + "의 " + studentStore.get(i).getSubjectList().get(j).getScoreList().get(k));
                 }
             }
 
@@ -433,7 +433,7 @@ public class CampManagementApplication {
 
         System.out.println("\n시험 점수를 수정합니다...");
 
-        System.out.print("\n수정할 과목 이름을 입력하세요: ");
+        System.out.print("\n수정할 과목 번호를 입력하세요: ");
         String subjectName = sc.next();
 
         // 등록되어 있는 회차 목록 확인
@@ -513,25 +513,25 @@ public class CampManagementApplication {
         }
     }
 
-        // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
+    // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
     private static void inquireRoundGradeBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         Subject sub = null;
 
         List<Subject> subList = printSubjectByStudent(studentId);
 
-        System.out.println("점수를 조회할 과목의 번호를 입력해주세요");
+        System.out.println("점수를 조회할 과목을 선택하시오");
 
         // 과목 선택
         while (true) {
-            String subNum = sc.next();
+            String subName = sc.next();
             boolean flag = false;
             for (Subject s : subList) {
-                if (s.getSubjectId().equals(subNum)) {
+                if (s.getSubjectName().equals(subName)) {
                     sub = s;
                     flag = true;
                     for(int i = 0; i < sub.getScoreList().size(); i++){
-                        System.out.println(sub.getSubjectName() + "의 " + (i + 1) + "회차 등급은 " + s.getScoreList().get(i).getGrade() + "입니다.");
+                        System.out.println(subName + "의 " + i + "회차 등급은 " + s.getScoreList().get(i).getGrade() + "입니다.");
                     }
                     break;
                 }
