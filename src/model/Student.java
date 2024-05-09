@@ -47,10 +47,6 @@ public class Student {
   
     public void setScoreList(Score score) { this.scoreList.add(score); }
 
-    public void setScoreList(Score score) {
-        this.scoreList.add(score);
-    }
-
     public String getStatus() {
         return status;
     }

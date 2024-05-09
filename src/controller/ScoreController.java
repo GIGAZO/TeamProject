@@ -16,7 +16,7 @@ public class ScoreController {
     // 수강생의 과목별 시험 회차 및 점수 등록 (효진님 파트)
     public void createScore(List<Student> studentStore) {
         // 관리할 수강생 고유 번호
-        String studentId = studentController.getStudentId();
+        String studentId = studentController.getStudentId(studentStore);
         String subjectId = "";
 
         System.out.println("점수를 등록할 과목을 선택하시오");
