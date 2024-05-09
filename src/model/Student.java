@@ -8,13 +8,14 @@ public class Student {
     private String studentName; // 이름
     private List<Subject> subjectList; // 수강 과목 저장용 List 객체
     private List<Score> scoreList;
-
+    private String status; // 수강생 상태
 
     public Student(String seq, String studentName) {
         this.studentId = seq; // 입력받은 값 저장
         this.studentName = studentName;
         this.subjectList = new ArrayList<>(); // List 객체 초기화
         this.scoreList = new ArrayList<>(); // List 객체 초기화
+        this.status = ""; // 수강생 상태 초기화
     }
 
     // getter setter
@@ -43,8 +44,19 @@ public class Student {
     public List<Score> getScoreList() {
         return scoreList;
     }
+  
+    public void setScoreList(Score score) { this.scoreList.add(score); }
 
     public void setScoreList(Score score) {
         this.scoreList.add(score);
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }
