@@ -139,7 +139,7 @@ public class CampManagementApplication {
                 case 1 -> studentStore = studentController.createStudent(studentStore,subjectStore); // 수강생 등록
                 case 2 -> studentController.updateStudentInfo(studentStore, subjectStore); // 수강생 정보 수정
                 case 3 -> studentController.inquireStudent(studentStore); // 수강생 목록 조회
-                case 4 -> studentController.inquireSubjectsByStudentStatus(studentStore);
+                case 4 -> studentController.inquireStudentsByStudentStatus(studentStore);
                 case 5 -> studentController.removeStudent(studentStore);
                 case 6 -> flag = false; // 메인 화면 이동
                 default -> {
