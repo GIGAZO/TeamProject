@@ -276,6 +276,7 @@ public class ScoreController {
         }
         Score newScore = new Score(round, score, grade, student.getStudentId(), subjectId);
         student.setScoreList(newScore);
+        student.getScoreList().forEach(n -> System.out.print(n.getRound()));
         return grade;
     }
 
