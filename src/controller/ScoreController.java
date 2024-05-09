@@ -223,6 +223,48 @@ public class ScoreController {
         return roundList;
     }
 
+    /* 특정 상태 수강생들의 필수 과목 평균 등급 조회 (지우님 파트) */
+    public void inquireSubjectAverageByStudentStatus(List<Student> studentStore) {
+        // 상태 목록을 저장할 리스트 생성
+        List<String> statuses = new ArrayList<>();
+
+        // 모든 수강생의 상태를 가져와 중복을 제거해 상태 목록에 저장
+        for (Student student : studentStore) {
+            String status = student.getStatus();
+            if (!statuses.contains(status)) {
+                statuses.add(status);
+            }
+        }
+
+        // 각 상태별로 필수 과목의 평균 등급 조회
+        for (String status : statuses) {
+            System.out.println(status + " 상태인 수강생들의 필수 과목 평균 등급:");
+
+            for (Student student : studentStore) {
+                // 해당 상태의 수강생만 필터링하기
+                if (student.getStatus().equals(status)) {
+                    // 필수 과목만 필터링해 가져오기
+                    List<Subject> mandatorySubjects = new ArrayList<>();
+                    for (Subject subject : student.getSubjectList()) {
+                        if (subject.getSubjectType().equals("MANDATORY")) {
+                            mandatorySubjects.add(subject);
+                        }
+                    }
+
+                    if (mandatorySubjects.isEmpty()) {
+                        System.out.println(student.getStudentName() + "님은 필수 과목을 수강하고 있지 않습니다.");
+                        continue;
+                    }
+
+                    System.out.println(student.getStudentName() + " : ");
+                    for (Subject subject : mandatorySubjects) {
+                        averageGrade(subject, student); // 평균 등급을 계산하고 출력
+                    }
+                }
+            }
+            System.out.println("-----------------------");
+        }
+    }
     // 지우 수정: 등급 반환하도록 변경
     public char makeGrade(String subjectId, Student student, int score, int round) {
         char grade;
