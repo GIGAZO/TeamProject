@@ -1,29 +1,31 @@
-## 프로젝트명: 캠프 관리 프로그램
+# 수강생 관리 프로그램
 
-### 1. 팀 이름: 기가막히조
-   - 팀원 소개:
-     - 노상윤(리더)
-     - 김예찬
-     - 이지우
-     - 정효진
-     - 한승훈A
+---------
+이 프로그램은 수강생들의 정보를 효율적으로 관리하는 프로그램입니다.
 
-### 2. 만든 프로그램
-   - 이 프로그램은 수강생들의 정보를 효율적으로 관리하는 프로그램입니다.
+Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.com/rohtable/), [이지우](https://github.com/20210805jiwoo), [정효진](https://github.com/hyojjin-jeong), [한승훈](https://github.com/hsh1105)
 
-### 3. 사용한 언어, 버전, 개발 환경
-   1. 언어: Java
-   2. 버전: JDK 17
-   3. 개발 환경: IntelliJ
+## 🛠️ Tech Stack
 
-### 4. 기능 명세서 캡쳐본
-   - [기능 명세서 캡쳐본 이미지]
+---------
+- 언어: Java
+- 버전: JDK 17
+- 개발 환경: IntelliJ
 
-### 5. ERD 다이어그램 캡쳐본
+## 📕 기획 명세서
+
+----------
+### 기능 명세서
+[기능 명세서 캡쳐본 이미지]
+### API 명세서
+[API 명세서 캡쳐본 이미지]
+### ERD Diagram
 ![ERD](https://github.com/GIGAZO/TeamProject/assets/20264396/f83d3283-fbea-4c8a-83da-401119b4ff41)
 
 
-### 6. 프로그램 상세 설명
+## 🔖 Features
+
+-------
 - 수강생 정보 등록:
     - 수강생의 고유번호, 이름, 선택한 과목, 기분 상태를 등록할 수 있습니다.
 - 수강생 정보 업데이트:
@@ -41,3 +43,7 @@
 - 시험 등급 조회:
     - 수강생의 특정 과목의 회차별 등급을 조회할 수 있습니다.
     - 특정 상태를 가진 수강생들의 필수 과목 평균 등급을 조회할 수 있습니다.
+## 🤙 Commit convention
+
+------
+![commit comvention](https://github.com/hyojjin-jeong/Algorithm-Hub/assets/64136923/ed577060-a15a-435b-a690-b8d038426d24)
