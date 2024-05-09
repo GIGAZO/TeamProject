@@ -35,15 +35,15 @@ public class StudentController {
         Student newStudent = new Student(studentId, studentName);
 
         // 기능 구현 (필수 과목, 선택 과목)
-        System.out.println("• 필수과목(3개 이상)");
+        System.out.println("• 필수과목 / 3개 이상의 과목을 번호로 선택하세요.");
         selectSubjects(newStudent, SUBJECT_TYPE_MANDATORY, 3, subjectStore);
 
         System.out.println("\n");
-        System.out.println("• 선택과목(2개 이상)");
+        System.out.println("• 선택과목 / 2개 이상의 과목을 번호로 선택하세요");
         selectSubjects(newStudent, SUBJECT_TYPE_CHOICE, 2, subjectStore);
 
         System.out.println("\n");
-        System.out.println("• 상태 선택");
+        System.out.println("• 상태 선택 / 해당하는 상태를 번호로 선택하세요.");
         selectStatus(newStudent);
 
         System.out.println("\n");
