@@ -20,7 +20,8 @@
    - [기능 명세서 캡쳐본 이미지]
 
 ### 5. ERD 다이어그램 캡쳐본
-   - [ERD 다이어그램 캡쳐본 이미지]
+![ERD](https://github.com/GIGAZO/TeamProject/assets/20264396/f83d3283-fbea-4c8a-83da-401119b4ff41)
+
 
 ### 6. 프로그램 상세 설명
 - 수강생 정보 등록:
