@@ -129,7 +129,8 @@ public class CampManagementApplication {
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 목록 조회");
             System.out.println("3. 상태별 수강생 목록 조회");
-            System.out.println("4. 메인 화면 이동");
+            System.out.println("4. 수강생 삭제");
+            System.out.println("5. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
@@ -137,7 +138,8 @@ public class CampManagementApplication {
                 case 1 -> studentStore = studentController.createStudent(studentStore,subjectStore); // 수강생 등록
                 case 2 -> studentController.inquireStudent(studentStore); // 수강생 목록 조회
                 case 3 -> studentController.inquireSubjectsByStudentStatus(studentStore);
-                case 4 -> flag = false; // 메인 화면 이동
+                case 4 -> studentController.removeStudent(studentStore);
+                case 5 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -155,7 +157,8 @@ public class CampManagementApplication {
             System.out.println("2. 수강생의 과목별 회차 점수 수정");
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
             System.out.println("4. 수강생의 과목별 평균 등급 조회");
-            System.out.println("5. 메인 화면 이동");
+            System.out.println("5. 특정 상태 수강생들의 필수 과목 평균 등급 조회");
+            System.out.println("6. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
@@ -164,7 +167,8 @@ public class CampManagementApplication {
                 case 2 -> scoreController.updateRoundScoreBySubject(studentStore); // 수강생의 과목별 회차 점수 수정
                 case 3 -> scoreController.inquireRoundGradeBySubject(studentStore); // 수강생의 특정 과목 회차별 등급 조회
                 case 4 -> scoreController.inquireSubjectAverageByStudent(studentStore); // 수강생의 과목별 평균 등급 조회
-                case 5 -> flag = false; // 메인 화면 이동
+                case 5 -> scoreController.inquireSubjectAverageByStudentStatus(studentStore); // 특정 상태 수강생들의 필수 과목 평균 등급 조회
+                case 6 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
