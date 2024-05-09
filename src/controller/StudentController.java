@@ -252,26 +252,29 @@ public class StudentController {
     // 수강생 삭제 (예찬님 파트)
     public void removeStudent(List<Student> studentStore) {
         String studentId = getStudentId(studentStore);
-        boolean flag = true;
+
         System.out.println("해당 학생을 삭제하시겠습니까? (y/n) : ");
-        while(flag)
-            if(sc.next().equals("y")){
-                System.out.println(studentId);
-                for (int i = 0; i < studentStore.size(); i++ ){
-                    if(studentStore.get(i).getStudentId().equals(studentId)) {
-                        for(int j = 0; j < studentStore.get(i).getScoreList().size(); j++)
+        String answer = sc.next();
+        switch (answer) {
+            case "y": {
+                for (int i = 0; i < studentStore.size(); i++) {
+                    if (studentStore.get(i).getStudentId().equals(studentId)) {
+                        for (int j = 0; j < studentStore.get(i).getScoreList().size(); j++)
                             studentStore.get(i).getScoreList().remove(j);
                         studentStore.remove(i);
                     }
                 }
                 System.out.println("수강생 삭제 완료!");
-                flag = false;
-            } else if (sc.next().equals("n")) {
+                break;
+            }
+            case "n": {
                 System.out.println("수강생 삭제를 취소합니다.");
-                flag = false;
-            } else {
+                break;
+            }
+            default: {
                 System.out.println("올바른 문자를 입력해주세요.");
             }
+        }
     }
 
 
