@@ -217,6 +217,9 @@ public class ScoreController {
             roundList.add(s.getRound());
             System.out.println(s.getRound() + "회차 ");
         }
+        if (roundList.size() == 0) {
+            System.out.println("점수가 등록되어 있는 회차가 없습니다.");
+        }
         return roundList;
     }
 
