@@ -38,6 +38,7 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
     - 수정된 점수에 따라 자동으로 등급이 부여됩니다.
 - 시험 등급 조회:
     - 수강생의 특정 과목의 회차별 등급을 조회할 수 있습니다.
+    - 수강생의 과목별 평균 등급을 조회할 수 있습니다. 
     - 특정 상태를 가진 수강생들의 필수 과목 평균 등급을 조회할 수 있습니다.
 ## 🤙 Commit convention
 ![commit comvention](https://github.com/GIGAZO/TeamProject/assets/64136923/b5dcada8-357b-4b92-b807-22361a47dad9)

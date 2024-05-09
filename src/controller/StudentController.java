@@ -174,7 +174,7 @@ public class StudentController {
         return sc.next();
     }
     // 상태별 수강생 목록 조회 (효진님 파트)
-    public void inquireSubjectsByStudentStatus(List<Student> studentStore) {
+    public void inquireStudentsByStudentStatus(List<Student> studentStore) {
         System.out.println("조회하고 싶은 수강생의 상태를 [숫자로] 입력해주세요.");
         System.out.println("1. Green 2. Red 3. Yellow");
         while (true) {
