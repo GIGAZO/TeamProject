@@ -78,7 +78,7 @@ public class ScoreController {
     /* 수강생의 과목별 회차 점수 수정 (지우님 파트) */
     public void updateRoundScoreBySubject(List<Student> studentStore) {
         // 관리할 수강생 고유 번호
-        String studentId = studentController.getStudentId();
+        String studentId = studentController.getStudentId(studentStore);
         String subjectId = "";
         // 관리할 수강생 존재하는지 확인
         boolean studentExist = false;
@@ -181,7 +181,7 @@ public class ScoreController {
 
     // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
     public void inquireRoundGradeBySubject(List<Student> studentStore) {
-        String studentId = studentController.getStudentId(); // 관리할 수강생 고유 번호
+        String studentId = studentController.getStudentId(studentStore); // 관리할 수강생 고유 번호
         Subject sub = null;
 
         Student student = subjectController.printSubjectByStudent(studentId, studentStore);

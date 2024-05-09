@@ -153,6 +153,7 @@ public class StudentController {
             System.out.println("학생 고유번호: " + student.getStudentId());
             System.out.println("학생 이름: " + student.getStudentName());
             System.out.println("선택한 과목: " + subjectlist);
+            System.out.println("학생 상태: " + student.getStatus());
             System.out.println("-------------------------------------");
         }
         // 기능 구현
