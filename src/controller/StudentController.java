@@ -17,8 +17,6 @@ public class StudentController {
     private static final String INDEX_TYPE_STUDENT = "ST";
     private static int subjectIndex; // 과목용 인덱스
     private static final String INDEX_TYPE_SUBJECT = "SU";
-    private static int scoreIndex; // 점수용 인덱스 (안 써도 될듯)
-    private static final String INDEX_TYPE_SCORE = "SC";
 
     Scanner sc = new Scanner(System.in);
 
@@ -217,8 +215,7 @@ public class StudentController {
                 return INDEX_TYPE_SUBJECT + subjectIndex;
             }
             default -> {
-                scoreIndex++;
-                return INDEX_TYPE_SCORE + scoreIndex;
+                return type;
             }
         }
     }

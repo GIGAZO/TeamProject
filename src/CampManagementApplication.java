@@ -21,19 +21,13 @@ public class CampManagementApplication {
     private static String SUBJECT_TYPE_MANDATORY = "MANDATORY"; // 필수 과목 설정용 상수
     private static String SUBJECT_TYPE_CHOICE = "CHOICE"; // 선택 과목 설정용 상수
 
-    // index 관리 필드
-    private static int studentIndex; // 학생용 인덱스
-    private static final String INDEX_TYPE_STUDENT = "ST";
-    private static int subjectIndex; // 과목용 인덱스
+    // index 관리 필드// 과목용 인덱스
     private static final String INDEX_TYPE_SUBJECT = "SU";
-    private static int scoreIndex; // 점수용 인덱스 (안 써도 될듯)
-    private static final String INDEX_TYPE_SCORE = "SC";
 
     // 스캐너
     private static Scanner sc = new Scanner(System.in);
 
     private static StudentController studentController = new StudentController();
-    private static SubjectController subjectController = new SubjectController();
     private static ScoreController scoreController = new ScoreController();
 
 
