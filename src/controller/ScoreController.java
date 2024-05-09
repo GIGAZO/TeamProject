@@ -129,55 +129,37 @@ public class ScoreController {
                 break;
             }
         }
-            System.out.print("새로운 점수를 입력하세요: ");
-            int newScore;
-            while (true) {
-                newScore = sc.nextInt();
-                if (newScore < 0 || newScore > 100) {
-                    System.out.print("점수는 0 ~ 100 사이의 숫자입니다. 다시 입력해주세요: ");
-                } else {
-                    break;
-                }
-            }
 
-            // 해당 과목 및 회차를 가진 수강생의 점수 수정
-            boolean scoreUpdate = false;
-            for (Student currentStudent : studentStore) {
-                if (studentId.equals(currentStudent.getStudentId())) {
-                    List<Subject> subjectList = currentStudent.getSubjectList();
-                    for (Subject sub : subjectList) {
-                        if (subjectId.equals(sub.getSubjectId())) {
-                            List<Score> subScores = currentStudent.getScoreList();
-                            for (Score score : subScores) {
-                                if (round == score.getRound()) {
-                                    // 이전 점수, 등급 저장
-                                    int prevScore = score.getScore();
-                                    char prevGrade = score.getGrade();
-                                    // 점수, 등급 업데이트
-                                    score.setScore(newScore);
-                                    char newGrade = makeGrade(subjectId, student, newScore, round);
-
-                                    System.out.println("회차 " + round + "의 점수가 수정되었습니다.");
-                                    System.out.println("수정된 과목: " + sub.getSubjectName());
-                                    System.out.println("이전 점수: " + prevScore);
-                                    System.out.println("수정된 점수: " + newScore);
-                                    System.out.println("이전 등급: " + prevGrade);
-                                    System.out.println("수정된 등급: " + newGrade);
-
-                                    scoreUpdate = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (!scoreUpdate) {
-                System.out.println("수정할 점수를 찾지 못했습니다. 다시 시도해주세요.");
+        // 이전 정보 저장
+        int prevScore = 0;
+        char prevGrade = 'N';
+        for (Score s : student.getScoreList()) {
+            if (s.getSubjectId().equals(subjectNum) && s.getRound() == round) {
+                prevScore = s.getScore();
+                prevGrade = s.getGrade();
+                break;
             }
         }
 
+        System.out.print("새로운 점수를 입력하세요: ");
+        int newScore;
+        while (true) {
+            newScore = sc.nextInt();
+            if (newScore < 0 || newScore > 100) {
+                System.out.print("점수는 0 ~ 100 사이의 숫자입니다. 다시 입력해주세요: ");
+            } else {
+                break;
+            }
+        }
 
+        // 해당 과목 및 회차를 가진 수강생의 점수 수정
+        char updatedGrade = makeGrade(subjectNum, student, newScore, round);
+
+        System.out.println("이전 점수: " + prevScore);
+        System.out.println("수정된 점수: " + newScore);
+        System.out.println("이전 등급: " + prevGrade);
+        System.out.println("수정된 등급: " + updatedGrade);
+    }
 
     // 수강생의 특정 과목 회차별 등급 조회 (예찬님 파트)
     public void inquireRoundGradeBySubject(List<Student> studentStore) {
