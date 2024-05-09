@@ -148,6 +148,9 @@ public class StudentController {
     }
 
     public void printStudent(List<Student> studentStore) {
+        if (studentStore.isEmpty()) {
+            System.out.println("해당 조건에 맞는 수강생이 없습니다.");
+        }
         for(Student student : studentStore) {
             String subjectList = "";
             for(int i = 0; i < student.getSubjectList().size(); i++) {
