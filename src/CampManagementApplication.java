@@ -58,69 +58,51 @@ public class CampManagementApplication {
         studentStore = new ArrayList<>(); // 전체 학생 정보를 담을 List를 초기화
         subjectStore = List.of( // 과목별로 객체를 생성해서 전체 과목 List에 담아주기
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "Java",
                         SUBJECT_TYPE_MANDATORY
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "객체지향",
                         SUBJECT_TYPE_MANDATORY
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "Spring",
                         SUBJECT_TYPE_MANDATORY
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "JPA",
                         SUBJECT_TYPE_MANDATORY
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "MySQL",
                         SUBJECT_TYPE_MANDATORY
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "디자인 패턴",
                         SUBJECT_TYPE_CHOICE
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "Spring Security",
                         SUBJECT_TYPE_CHOICE
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "Redis",
                         SUBJECT_TYPE_CHOICE
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "MongoDB",
                         SUBJECT_TYPE_CHOICE
                 )
         );
-    }
-
-    // index 자동 증가
-    private static String sequence(String type) {
-        switch (type) {
-            case INDEX_TYPE_STUDENT -> {
-                studentIndex++;
-                return INDEX_TYPE_STUDENT + studentIndex;
-            }
-            case INDEX_TYPE_SUBJECT -> {
-                subjectIndex++;
-                return INDEX_TYPE_SUBJECT + subjectIndex;
-            }
-            default -> {
-                scoreIndex++;
-                return INDEX_TYPE_SCORE + scoreIndex;
-            }
-        }
     }
 
     private static void displayMainView() throws InterruptedException {
@@ -162,7 +144,7 @@ public class CampManagementApplication {
             switch (input) {
                 case 1 -> studentController.createStudent(studentStore,subjectStore); // 수강생 등록
                 case 2 -> studentController.inquireStudent(studentStore); // 수강생 목록 조회
-                case 3 -> studentController.inquireSubjectsByStudentStatus();
+                case 3 -> studentController.inquireSubjectsByStudentStatus(studentStore);
                 case 4 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
