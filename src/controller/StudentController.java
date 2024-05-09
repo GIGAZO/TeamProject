@@ -157,9 +157,10 @@ public class StudentController {
                     subjectList += ", ";
                 }
             }
-            System.out.println("학생 고유번호: " + student.getStudentId());
-            System.out.println("학생 이름: " + student.getStudentName());
+            System.out.println("수강생 고유번호: " + student.getStudentId());
+            System.out.println("수강생 이름: " + student.getStudentName());
             System.out.println("선택한 과목: " + subjectList);
+            System.out.println("수강생 상태: " + student.getStatus());
             System.out.println("-------------------------------------");
         }
     }
