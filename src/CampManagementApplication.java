@@ -2,7 +2,6 @@ package TeamProject.src;
 
 import TeamProject.src.controller.ScoreController;
 import TeamProject.src.controller.StudentController;
-import TeamProject.src.controller.SubjectController;
 import TeamProject.src.model.Score;
 import TeamProject.src.model.Student;
 import TeamProject.src.model.Subject;
@@ -10,7 +9,6 @@ import TeamProject.src.model.Subject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class CampManagementApplication {
     // 데이터 저장소
