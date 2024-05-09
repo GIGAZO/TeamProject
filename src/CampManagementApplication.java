@@ -10,6 +10,7 @@ import TeamProject.src.model.Subject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class CampManagementApplication {
     // 데이터 저장소
@@ -20,19 +21,13 @@ public class CampManagementApplication {
     private static String SUBJECT_TYPE_MANDATORY = "MANDATORY"; // 필수 과목 설정용 상수
     private static String SUBJECT_TYPE_CHOICE = "CHOICE"; // 선택 과목 설정용 상수
 
-    // index 관리 필드
-    private static int studentIndex; // 학생용 인덱스
-    private static final String INDEX_TYPE_STUDENT = "ST";
-    private static int subjectIndex; // 과목용 인덱스
+    // index 관리 필드// 과목용 인덱스
     private static final String INDEX_TYPE_SUBJECT = "SU";
-    private static int scoreIndex; // 점수용 인덱스 (안 써도 될듯)
-    private static final String INDEX_TYPE_SCORE = "SC";
 
     // 스캐너
     private static Scanner sc = new Scanner(System.in);
 
     private static StudentController studentController = new StudentController();
-    private static SubjectController subjectController = new SubjectController();
     private static ScoreController scoreController = new ScoreController();
 
 
@@ -57,69 +52,51 @@ public class CampManagementApplication {
         studentStore = new ArrayList<>(); // 전체 학생 정보를 담을 List를 초기화
         subjectStore = List.of( // 과목별로 객체를 생성해서 전체 과목 List에 담아주기
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "Java",
                         SUBJECT_TYPE_MANDATORY
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "객체지향",
                         SUBJECT_TYPE_MANDATORY
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "Spring",
                         SUBJECT_TYPE_MANDATORY
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "JPA",
                         SUBJECT_TYPE_MANDATORY
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "MySQL",
                         SUBJECT_TYPE_MANDATORY
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "디자인 패턴",
                         SUBJECT_TYPE_CHOICE
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "Spring Security",
                         SUBJECT_TYPE_CHOICE
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "Redis",
                         SUBJECT_TYPE_CHOICE
                 ),
                 new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
+                        studentController.sequence(INDEX_TYPE_SUBJECT),
                         "MongoDB",
                         SUBJECT_TYPE_CHOICE
                 )
         );
-    }
-
-    // index 자동 증가
-    private static String sequence(String type) {
-        switch (type) {
-            case INDEX_TYPE_STUDENT -> {
-                studentIndex++;
-                return INDEX_TYPE_STUDENT + studentIndex;
-            }
-            case INDEX_TYPE_SUBJECT -> {
-                subjectIndex++;
-                return INDEX_TYPE_SUBJECT + subjectIndex;
-            }
-            default -> {
-                scoreIndex++;
-                return INDEX_TYPE_SCORE + scoreIndex;
-            }
-        }
     }
 
     private static void displayMainView() throws InterruptedException {
@@ -161,7 +138,7 @@ public class CampManagementApplication {
             switch (input) {
                 case 1 -> studentController.createStudent(studentStore,subjectStore); // 수강생 등록
                 case 2 -> studentController.inquireStudent(studentStore); // 수강생 목록 조회
-                case 3 -> studentController.inquireSubjectsByStudentStatus();
+                case 3 -> studentController.inquireSubjectsByStudentStatus(studentStore);
                 case 4 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
@@ -188,7 +165,7 @@ public class CampManagementApplication {
                 case 1 -> scoreController.createScore(studentStore); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> scoreController.updateRoundScoreBySubject(studentStore); // 수강생의 과목별 회차 점수 수정
                 case 3 -> scoreController.inquireRoundGradeBySubject(studentStore); // 수강생의 특정 과목 회차별 등급 조회
-                case 4 -> scoreController.inquireSubjectAverageByStudent(); // 수강생의 과목별 평균 등급 조회
+                case 4 -> scoreController.inquireSubjectAverageByStudent(studentStore); // 수강생의 과목별 평균 등급 조회
                 case 5 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
