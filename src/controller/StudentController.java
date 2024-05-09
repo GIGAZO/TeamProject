@@ -35,15 +35,15 @@ public class StudentController {
         Student newStudent = new Student(studentId, studentName);
 
         // 기능 구현 (필수 과목, 선택 과목)
-        System.out.println("• 필수과목(3개 이상)");
+        System.out.println("• 필수과목 / 3개 이상의 과목을 번호로 선택하세요.");
         selectSubjects(newStudent, SUBJECT_TYPE_MANDATORY, 3, subjectStore);
 
         System.out.println("\n");
-        System.out.println("• 선택과목(2개 이상)");
+        System.out.println("• 선택과목 / 2개 이상의 과목을 번호로 선택하세요");
         selectSubjects(newStudent, SUBJECT_TYPE_CHOICE, 2, subjectStore);
 
         System.out.println("\n");
-        System.out.println("• 상태 선택");
+        System.out.println("• 상태 선택 / 해당하는 상태를 번호로 선택하세요.");
         selectStatus(newStudent);
 
         System.out.println("\n");
@@ -139,6 +139,48 @@ public class StudentController {
         }
     }
 
+    public void updateStudentInfo(List<Student> studentStore, List<Subject> subjectStore) {
+        if (studentStore.isEmpty()) {
+            System.out.println("등록된 수강생이 없습니다.");
+            return;
+        }
+
+        System.out.println("수강생 목록을 조회합니다...");
+        printStudent(studentStore); // 기존 수강생 목록 출력
+        System.out.println("수정할 수강생의 번호를 입력하시오...");
+
+        String id = getStudentId(studentStore); // 수강생 고유번호 입력 받기
+        Student student = studentStore.stream()
+                .filter(s -> s.getStudentId().equals(id))
+                .findFirst()
+                .orElse(null);
+
+        if (student == null) {
+            System.out.println("해당 ID의 수강생을 찾을 수 없습니다.");
+            return;
+        }
+
+        System.out.println("새로운 정보를 입력합니다.");
+        // 이름 업데이트
+        System.out.print("• 이름: ");
+        String studentName = sc.next();
+        student.setStudentName(studentName);
+
+        // 과목 목록 초기화 및 새로 선택
+        student.getSubjectList().clear();
+        System.out.println("• 필수과목 / 3개 이상의 과목을 번호로 선택하세요.");
+        selectSubjects(student, SUBJECT_TYPE_MANDATORY, 3, subjectStore);
+        System.out.println("• 선택과목 / 2개 이상의 과목을 번호로 선택하세요.");
+        selectSubjects(student, SUBJECT_TYPE_CHOICE, 2, subjectStore);
+
+        // 상태 업데이트
+        selectStatus(student);
+
+        System.out.println("수강생 정보가 성공적으로 수정되었습니다.");
+    }
+
+
+
     // 수강생 목록 조회 (승훈님 파트)
     public void inquireStudent(List<Student> studentStore) {
         System.out.println("\n수강생 목록을 조회합니다...");
@@ -210,26 +252,29 @@ public class StudentController {
     // 수강생 삭제 (예찬님 파트)
     public void removeStudent(List<Student> studentStore) {
         String studentId = getStudentId(studentStore);
-        boolean flag = true;
+
         System.out.println("해당 학생을 삭제하시겠습니까? (y/n) : ");
-        while(flag)
-            if(sc.next().equals("y")){
-                System.out.println(studentId);
-                for (int i = 0; i < studentStore.size(); i++ ){
-                    if(studentStore.get(i).getStudentId().equals(studentId)) {
-                        for(int j = 0; j < studentStore.get(i).getScoreList().size(); j++)
+        String answer = sc.next();
+        switch (answer) {
+            case "y": {
+                for (int i = 0; i < studentStore.size(); i++) {
+                    if (studentStore.get(i).getStudentId().equals(studentId)) {
+                        for (int j = 0; j < studentStore.get(i).getScoreList().size(); j++)
                             studentStore.get(i).getScoreList().remove(j);
                         studentStore.remove(i);
                     }
                 }
                 System.out.println("수강생 삭제 완료!");
-                flag = false;
-            } else if (sc.next().equals("n")) {
+                break;
+            }
+            case "n": {
                 System.out.println("수강생 삭제를 취소합니다.");
-                flag = false;
-            } else {
+                break;
+            }
+            default: {
                 System.out.println("올바른 문자를 입력해주세요.");
             }
+        }
     }
 
 
