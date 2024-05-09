@@ -17,6 +17,8 @@ public class StudentController {
     private static final String INDEX_TYPE_STUDENT = "ST";
     private static int subjectIndex; // 과목용 인덱스
     private static final String INDEX_TYPE_SUBJECT = "SU";
+    private static int scoreIndex; // 점수용 인덱스 (안 써도 될듯)
+    private static final String INDEX_TYPE_SCORE = "SC";
 
     Scanner sc = new Scanner(System.in);
 
@@ -204,6 +206,32 @@ public class StudentController {
         System.out.println("-------------------------------------");
         printStudent(statusStudent);
     }
+
+    // 수강생 삭제 (예찬님 파트)
+    public void removeStudent(List<Student> studentStore) {
+        String studentId = getStudentId(studentStore);
+        boolean flag = true;
+        System.out.println("해당 학생을 삭제하시겠습니까? (y/n) : ");
+        while(flag)
+            if(sc.next().equals("y")){
+                System.out.println(studentId);
+                for (int i = 0; i < studentStore.size(); i++ ){
+                    if(studentStore.get(i).getStudentId().equals(studentId)) {
+                        for(int j = 0; j < studentStore.get(i).getScoreList().size(); j++)
+                            studentStore.get(i).getScoreList().remove(j);
+                        studentStore.remove(i);
+                    }
+                }
+                System.out.println("수강생 삭제 완료!");
+                flag = false;
+            } else if (sc.next().equals("n")) {
+                System.out.println("수강생 삭제를 취소합니다.");
+                flag = false;
+            } else {
+                System.out.println("올바른 문자를 입력해주세요.");
+            }
+    }
+
 
     public String sequence(String type) {
         switch (type) {
