@@ -3,6 +3,7 @@ package TeamProject.src.controller;
 import TeamProject.src.model.Student;
 import TeamProject.src.model.Subject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -16,8 +17,6 @@ public class StudentController {
     private static final String INDEX_TYPE_STUDENT = "ST";
     private static int subjectIndex; // 과목용 인덱스
     private static final String INDEX_TYPE_SUBJECT = "SU";
-    private static int scoreIndex; // 점수용 인덱스 (안 써도 될듯)
-    private static final String INDEX_TYPE_SCORE = "SC";
 
     Scanner sc = new Scanner(System.in);
 
@@ -142,22 +141,28 @@ public class StudentController {
     public void inquireStudent(List<Student> studentStore) {
         System.out.println("\n수강생 목록을 조회합니다...");
         System.out.println("-------------------------------------");
+        printStudent(studentStore);
+        System.out.println("\n수강생 목록 조회 성공!");
+    }
+
+    public void printStudent(List<Student> studentStore) {
+        if (studentStore.isEmpty()) {
+            System.out.println("해당 조건에 맞는 수강생이 없습니다.");
+        }
         for(Student student : studentStore) {
-            String subjectlist = "";
+            String subjectList = "";
             for(int i = 0; i < student.getSubjectList().size(); i++) {
-                subjectlist += student.getSubjectList().get(i).getSubjectName();
+                subjectList += student.getSubjectList().get(i).getSubjectName();
                 if(i != student.getSubjectList().size() - 1) {
-                    subjectlist += ", ";
+                    subjectList += ", ";
                 }
             }
-            System.out.println("학생 고유번호: " + student.getStudentId());
-            System.out.println("학생 이름: " + student.getStudentName());
-            System.out.println("선택한 과목: " + subjectlist);
-            System.out.println("학생 상태: " + student.getStatus());
+            System.out.println("수강생 고유번호: " + student.getStudentId());
+            System.out.println("수강생 이름: " + student.getStudentName());
+            System.out.println("선택한 과목: " + subjectList);
+            System.out.println("수강생 상태: " + student.getStatus());
             System.out.println("-------------------------------------");
         }
-        // 기능 구현
-        System.out.println("\n수강생 목록 조회 성공!");
     }
 
     public String getStudentId(List<Student> studentStore) {
@@ -167,34 +172,40 @@ public class StudentController {
         return sc.next();
     }
     // 상태별 수강생 목록 조회 (효진님 파트)
-    public void inquireSubjectsByStudentStatus() {
-        System.out.println("조회하고 싶은 수강생의 상태를 입력해주세요.");
-        System.out.println("green, red, yellow -> 3 가지의 상태 중 하나를 입력해주세요.");
+    public void inquireSubjectsByStudentStatus(List<Student> studentStore) {
+        System.out.println("조회하고 싶은 수강생의 상태를 [숫자로] 입력해주세요.");
+        System.out.println("1. Green 2. Red 3. Yellow");
         while (true) {
-            String studentStatus = sc.next();
-            if (studentStatus.equals("green") || studentStatus.equals("red") || studentStatus.equals("yellow")) {
-                System.out.println(studentStatus + "상태인 수강생들을 조회합니다.");
-                System.out.println("-------------------------------------");
-//                for (Student student : studentStore) {
-//                    if (student.getStudentStatus().equals(studentStatus)) {
-//                        // 승훈님 파트 student에 함수 만들어서 같이 사용하기!
-//                        System.out.println("학생 고유번호 : " + student.getStudentId());
-//                        System.out.println("학생 이름 : " + student.getStudentName());
-//                        System.out.print("선택한 과목명 : ");
-//                        for (Subject subject : student.getSubjectList()) {
-//                            System.out.println(subject.getSubjectId() + " " + subject.getSubjectName());
-//                        }
-//                        System.out.println("-------------------------------------");
-//                    }
-//                }
-                break;
-            } else {
-                System.out.println("올바르지 않는 입력이 들어왔습니다. green, red, yellow -> 3 가지의 상태 중 하나를 입력해주세요.");
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    printStudentByStatus(studentStore, "Green");
+                    break;
+                case 2:
+                    printStudentByStatus(studentStore, "Red");
+                    break;
+                case 3:
+                    printStudentByStatus(studentStore, "Yellow");
+                    break;
+                default:
+                    System.out.println("올바르지 않는 입력이 들어왔습니다. [숫자] 1,2,3 중 하나를 입력해주세요.");
             }
+            break;
         }
     }
+    public void printStudentByStatus(List<Student> studentStore, String status) {
+        List<Student> statusStudent = new ArrayList<>();
+        for (Student student : studentStore) {
+            if (student.getStatus().equals(status)) {
+                statusStudent.add(student);
+            }
+        }
+        System.out.println(status + "상태인 수강생들을 조회합니다.");
+        System.out.println("-------------------------------------");
+        printStudent(statusStudent);
+    }
 
-    private static String sequence(String type) {
+    public String sequence(String type) {
         switch (type) {
             case INDEX_TYPE_STUDENT -> {
                 studentIndex++;
@@ -205,8 +216,7 @@ public class StudentController {
                 return INDEX_TYPE_SUBJECT + subjectIndex;
             }
             default -> {
-                scoreIndex++;
-                return INDEX_TYPE_SCORE + scoreIndex;
+                return type;
             }
         }
     }
