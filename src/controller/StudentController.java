@@ -19,28 +19,36 @@ public class StudentController {
     private static int scoreIndex; // 점수용 인덱스 (안 써도 될듯)
     private static final String INDEX_TYPE_SCORE = "SC";
 
-
     Scanner sc = new Scanner(System.in);
+
+
     // 수강생 등록 (상윤님 파트)
     public List<Student> createStudent(List<Student> studentStore, List<Subject> subjectStore) {
-        //void 말고 list<student>
-        System.out.println("\n수강생을 등록합니다...");
-        System.out.print("수강생 이름 입력: ");
+        System.out.println("==================================");
+        System.out.println("[수강생 등록]");
+        System.out.print("• 이름 : ");
         String studentName = sc.next();
-        //Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
+        System.out.println("\n");
 
         String studentId = sequence(INDEX_TYPE_STUDENT);
         Student newStudent = new Student(studentId, studentName);
 
         // 기능 구현 (필수 과목, 선택 과목)
-        System.out.println("필수 과목을 선택하세요. 최소 3개:");
+        System.out.println("• 필수과목(3개 이상)");
         selectSubjects(newStudent, SUBJECT_TYPE_MANDATORY, 3, subjectStore);
 
-        System.out.println("선택 과목을 선택하세요. 최소 2개:");
+        System.out.println("\n");
+        System.out.println("• 선택과목(2개 이상)");
         selectSubjects(newStudent, SUBJECT_TYPE_CHOICE, 2, subjectStore);
 
+        System.out.println("\n");
+        System.out.println("• 상태 선택");
+        selectStatus(newStudent);
+
+        System.out.println("\n");
         studentStore.add(newStudent);
-        System.out.println("수강생 등록 성공!\n");
+        System.out.println("수강생 등록 성공! 이 전 화면으로 돌아갑니다...");
+        //System.out.println("==================================");
 
         return studentStore;
     }
@@ -51,15 +59,14 @@ public class StudentController {
                 .filter(subject -> subject.getSubjectType().equals(subjectType)) // 파라미터에 담긴 과목 타입으로 필터링(같은 것을 찾음)
                 .collect(Collectors.toList()); // 필터링의 결과를 다시 리스트로 담는 것 -> availableSubjects에 담김
         int count = 0;
-        System.out.println("과목을 선택하세요(번호 입력):");
+        //System.out.println("과목을 선택하세요(번호 입력):");
 
-        while (true) {
+        while (count < minimumSubjects || (count < choiceSubjects.size() && count >= minimumSubjects)) {
             // 선택지 생성, 과목을 리스트 형태로
             for (int i = 0; i < choiceSubjects.size(); i++) {
                 Subject sub = choiceSubjects.get(i);
                 System.out.println((i + 1) + ". " + sub.getSubjectName());
             }
-
 
             int choice = sc.nextInt() - 1; // 입력 받은 숫자에서 -1로 번호 조정
             if (choice >= 0 && choice < choiceSubjects.size()) {
@@ -67,34 +74,117 @@ public class StudentController {
                 if (!student.getSubjectList().contains(selectedSubject)) {
                     student.setSubjectList(selectedSubject);
                     count++;
-                    System.out.println(selectedSubject.getSubjectName() + " 과목이 추가되었습니다.");
+                    System.out.println(selectedSubject.getSubjectName() + "이(가) 추가되었습니다.");
                 } else {
-                    System.out.println("이미 선택된 과목입니다.");
+                    System.out.println("※ 이미 선택된 과목입니다.");
                 }
             } else {
-                System.out.println("잘못 입력되었습니다. 다시 선택해주세요.");
+                System.out.println("※ 잘못 입력되었습니다. 다시 선택해주세요.");
             }
 
-            if (count >= minimumSubjects) {
-                System.out.print("과목 더 추가하시겠습니까? (y/n): ");
+            if (count >= minimumSubjects && count < choiceSubjects.size()) {
+                System.out.print("과목을 더 추가하시겠습니까? (y/n): ");
                 String answer = sc.next();
-                if (answer.equalsIgnoreCase("n") && choice == choiceSubjects.size()) {
+                //System.out.print("\n=======================================\n");
+                if (answer.equalsIgnoreCase("n")) {
                     break;
                 }
+            } else if (count == choiceSubjects.size()) {
+                //System.out.println("모든 선택 가능한 과목이 추가되었습니다.");
+                break;
             }
+        }
+
+        // 선택된 과목 리스트 출력
+        //System.out.println("선택된 과목:");
+        //student.getSubjectList().forEach(subject -> System.out.println("• " + subject.getSubjectName()));
+
+        // 선택된 과목 리스트 출력
+        List<String> mandatorySubjects = student.getSubjectList().stream()
+                .filter(subject -> subject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY))
+                .map(Subject::getSubjectName)
+                .collect(Collectors.toList());
+
+        List<String> choiSubjects = student.getSubjectList().stream()
+                .filter(subject -> subject.getSubjectType().equals(SUBJECT_TYPE_CHOICE))
+                .map(Subject::getSubjectName)
+                .collect(Collectors.toList());
+
+        System.out.println("선택된 필수 과목: " + String.join(", ", mandatorySubjects));
+        System.out.println("선택된 선택 과목: " + String.join(", ", choiSubjects));
+    }
+
+    public void selectStatus(Student student) {
+        while (true) {
+            System.out.println("1. Green 2. Red 3. Yellow");
+            System.out.print("상태를 선택하세요: ");
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    student.setStatus("Green");
+                    break;
+                case 2:
+                    student.setStatus("Red");
+                    break;
+                case 3:
+                    student.setStatus("Yellow");
+                    break;
+                default:
+                    System.out.println("잘못 입력되었습니다.. 다시 선택해주세요.");
+                    continue;
+            }
+            System.out.println("선택된 상태: " + student.getStatus());
+            break;
         }
     }
 
+    // 수강생 목록 조회(승훈님 파트)
     public void inquireStudent() {
 //        System.out.println("\n수강생 목록을 조회합니다...");
 //        System.out.println("-------------------------------------");
 //        for(Student student : studentStore) {
+//            String subjectlist = "";
+//            for(int i = 0; i < student.getSubjectList().size(); i++) {
+//                subjectlist += student.getSubjectList().get(i).getSubjectName();
+//                if(i != student.getSubjectList().size() - 1) {
+//                    subjectlist += ", ";
+//                }
+//            }
 //            System.out.println("학생 고유번호: " + student.getStudentId());
 //            System.out.println("학생 이름: " + student.getStudentName());
+//            System.out.println("선택한 과목: " + subjectlist);
 //            System.out.println("-------------------------------------");
 //        }
 //        // 기능 구현
 //        System.out.println("\n수강생 목록 조회 성공!");
+    }
+
+    // 상태별 수강생 목록 조회 (효진님 파트)
+    public void inquireSubjectsByStudentStatus() {
+        System.out.println("조회하고 싶은 수강생의 상태를 입력해주세요.");
+        System.out.println("green, red, yellow -> 3 가지의 상태 중 하나를 입력해주세요.");
+        while (true) {
+            String studentStatus = sc.next();
+            if (studentStatus.equals("green") || studentStatus.equals("red") || studentStatus.equals("yellow")) {
+                System.out.println(studentStatus + "상태인 수강생들을 조회합니다.");
+                System.out.println("-------------------------------------");
+//                for (Student student : studentStore) {
+//                    if (student.getStudentStatus().equals(studentStatus)) {
+//                        // 승훈님 파트 student에 함수 만들어서 같이 사용하기!
+//                        System.out.println("학생 고유번호 : " + student.getStudentId());
+//                        System.out.println("학생 이름 : " + student.getStudentName());
+//                        System.out.print("선택한 과목명 : ");
+//                        for (Subject subject : student.getSubjectList()) {
+//                            System.out.println(subject.getSubjectId() + " " + subject.getSubjectName());
+//                        }
+//                        System.out.println("-------------------------------------");
+//                    }
+//                }
+                break;
+            } else {
+                System.out.println("올바르지 않는 입력이 들어왔습니다. green, red, yellow -> 3 가지의 상태 중 하나를 입력해주세요.");
+            }
+        }
     }
 
     public String getStudentId() {
