@@ -19,7 +19,7 @@ public class ScoreController {
         String studentId = studentController.getStudentId(studentStore);
         String subjectId = "";
 
-        System.out.println("점수를 등록할 과목을 선택하시오");
+        System.out.println("점수를 등록할 과목 고유번호를 입력해주세요.");
         // 해당 수강생이 듣는 과목 출력
         Student student = subjectController.printSubjectByStudent(studentId, studentStore);
         // 과목 선택
@@ -34,7 +34,7 @@ public class ScoreController {
                 }
             }
             if (!flag) {
-                System.out.println("현재 학생이 수강하고 있는 과목이 아닙니다. 다시 과목을 선택해주세요.");
+                System.out.println("현재 수강생이 수강하고 있는 과목이 아닙니다. 수강생이 수강하고 있는 과목으로 입력해주세요.");
             } else {
                 break;
             }
@@ -49,7 +49,7 @@ public class ScoreController {
             round = sc.nextInt();
             // 이미 있는 회차이면 예외처리해서 다시 받기
             if (roundList.contains(round)) {
-                System.out.println("이미 등록된 회차입니다. 등록되지 않은 회차를 선택해주세요.");
+                System.out.println("이미 등록된 회차입니다. 등록되지 않은 회차(숫자만)를 선택해주세요.");
             } else if (1 > round || round > 10) {
                 System.out.println("1 ~ 10 회차만 등록이 가능합니다. 올바른 범위의 회차(숫자만)를 입력해주세요. ");
             } else {
@@ -211,14 +211,16 @@ public class ScoreController {
 
     // 정효진 수정 -> 해당 과목의 점수가 등록되어 있는 회차 출력 함수
     public List<Integer> printIsScore(Student student) {
-        System.out.println("현재 점수가 등록되어 있는 회차입니다.");
         List<Integer> roundList = new ArrayList<>();
         for (Score s : student.getScoreList()) {
             roundList.add(s.getRound());
-            System.out.println(s.getRound() + "회차 ");
         }
         if (roundList.size() == 0) {
             System.out.println("점수가 등록되어 있는 회차가 없습니다.");
+        } else {
+            System.out.println("현재 점수가 등록되어 있는 회차입니다.");
+            roundList.forEach(n -> System.out.print(n + "회차 "));
+            System.out.println();
         }
         return roundList;
     }
