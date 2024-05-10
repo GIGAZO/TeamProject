@@ -16,7 +16,7 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 <img src="https://github.com/GIGAZO/TeamProject/assets/102974424/b2e06662-30a6-47ef-8e9c-b015c8fefcba" width="600">
 
 ### 기능 명세서
-<img src="https://github.com/GIGAZO/TeamProject/assets/64136923/aa8b9aac-7644-41eb-9eff-2264e0aae5d1" width="600">
+<img src="https://github.com/hyojjin-jeong/Algorithm-Hub/assets/64136923/9db9160c-83eb-4703-9715-f1cfc39b934b" width=100%>
 
 ### ERD Diagram
 <img src="https://github.com/GIGAZO/TeamProject/assets/102974424/07ab1265-a1de-4bde-9e39-22599a7731cf" width="600">
