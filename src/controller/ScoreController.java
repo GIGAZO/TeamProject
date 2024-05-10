@@ -121,12 +121,12 @@ public class ScoreController {
         /* 회차 수정 */
         List<Integer> roundList = printIsScore(student, selectedSubject.getSubjectId());
 
-        System.out.print("수정할 회차를 입력하세요: ");
+        System.out.print("수정할 회차(숫자만)를 입력해주세요: ");
         int round;
         while (true) {
             round = sc.nextInt();
             if (!roundList.contains(round)) {
-                System.out.print("등록되지 않은 회차입니다: 다시 입력하세요: ");
+                System.out.print("등록되지 않은 회차입니다. 다시 입력해주세요: ");
             } else {
                 break;
             }
