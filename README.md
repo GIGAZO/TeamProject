@@ -13,7 +13,7 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 ## 📕 기획 명세서
 
 ### 요구사항 정의서
-![image](https://github.com/GIGAZO/TeamProject/assets/102974424/b3be6c95-4510-46d8-9485-d7a86067e569)
+![image](https://github.com/GIGAZO/TeamProject/assets/102974424/3a7224b2-2564-4c9c-9b6e-c15562f6604f)
 
 
 ### ERD Diagram
