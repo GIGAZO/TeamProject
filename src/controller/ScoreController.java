@@ -119,15 +119,14 @@ public class ScoreController {
         }
 
         /* 회차 수정 */
-        System.out.println("현재 등록된 회차 목록: ");
-        List<Integer> roundList = printIsScore(student, subjectId);
+        List<Integer> roundList = printIsScore(student, selectedSubject.getSubjectId());
 
-        System.out.print("수정할 회차를 입력하세요: ");
+        System.out.print("수정할 회차(숫자만)를 입력해주세요: ");
         int round;
         while (true) {
             round = sc.nextInt();
             if (!roundList.contains(round)) {
-                System.out.print("등록되지 않은 회차입니다: 다시 입력하세요: ");
+                System.out.print("등록되지 않은 회차입니다. 다시 입력해주세요: ");
             } else {
                 break;
             }
@@ -136,13 +135,16 @@ public class ScoreController {
         // 이전 정보 저장
         int prevScore = 0;
         char prevGrade = 'N';
+        Score removeScore = null;
         for (Score s : student.getScoreList()) {
             if (s.getSubjectId().equals(subjectNum) && s.getRound() == round) {
+                removeScore = s;
                 prevScore = s.getScore();
                 prevGrade = s.getGrade();
                 break;
             }
         }
+        student.getScoreList().remove(removeScore);
 
         System.out.print("새로운 점수를 입력하세요: ");
         int newScore;
@@ -182,7 +184,9 @@ public class ScoreController {
                     sub = s;
                     flag = true;
                     for(int i = 0; i < student.getScoreList().size(); i++){
-                        System.out.println(sub.getSubjectName() + "의 " + (i + 1) + "회차 등급은 " + student.getScoreList().get(i).getGrade() + "입니다.");
+                        if (student.getScoreList().get(i).getSubjectId().equals(subNum)) {
+                            System.out.println(sub.getSubjectName() + "의 " + (i + 1) + "회차 등급은 " + student.getScoreList().get(i).getGrade() + "입니다.");
+                        }
                     }
                     break;
                 }
