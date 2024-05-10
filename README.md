@@ -59,9 +59,9 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 - 하나의 기능을 구현 할 때마다 commit
 - 큰 함수 혹은 기능을 구현하면 develop 브랜치로 pull request
 - 충돌 해결 후 merge
-- develop에 올라가면 slack에 공지 - ex) develop pull 한 번 해주세요~ <br>
+- develop에 올라가면 slack에 공지 - ex) develop pull 한 번 해주세요~ <br><br>
 - git commit -m “message”
 - message : [update] 수강생 등록 기능 구현
 - 작업한 내용과 기능이 무엇인지 정확히 파악 가능하게 message 적기 <br>
 
-![image](https://github.com/GIGAZO/TeamProject/assets/102974424/5195ca23-e684-43b8-a14f-8b79cd94302f)
+<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/5195ca23-e684-43b8-a14f-8b79cd94302f" width="200">
