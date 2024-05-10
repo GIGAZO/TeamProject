@@ -22,6 +22,7 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 
 - 수강생 정보 등록:
     - 수강생의 고유번호, 이름, 선택한 과목, 기분 상태를 등록할 수 있습니다.
+      
 - 수강생 정보 업데이트:
     - 수강생의 이름 혹은 상태를 수정할 수 있습니다.
     - 수강생의 정보를 삭제할 수 있습니다.
@@ -55,6 +56,7 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 
 ## Github Rules
 - 자신의 브랜치에서 코드 구현
+  
 - 하나의 기능을 구현 할 때마다 commit
 - 큰 함수 혹은 기능을 구현하면 develop 브랜치로 pull request
 - 충돌 해결 후 merge
@@ -63,4 +65,4 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 - message : [update] 수강생 등록 기능 구현
 - 작업한 내용과 기능이 무엇인지 정확히 파악 가능하게 message 적기 <br><br>
 
-<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/5195ca23-e684-43b8-a14f-8b79cd94302f" width="600">
+<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/5195ca23-e684-43b8-a14f-8b79cd94302f" width="500">
