@@ -103,7 +103,7 @@ public class ScoreController {
         System.out.println("\n시험 점수를 수정합니다...");
 
         /* 과목 수정 */
-        System.out.print("\n수정할 과목 번호를 입력하세요: ");
+        System.out.print("\n수정할 과목 고유번호를 입력하세요: ");
         String subjectNum = sc.next();
 
         Subject selectedSubject = null;
@@ -119,7 +119,7 @@ public class ScoreController {
         }
 
         /* 회차 수정 */
-        System.out.println("현재 등록된 회차 목록: ");
+        // System.out.println("현재 등록된 회차 목록: ");
         List<Integer> roundList = printIsScore(student);
 
         System.out.print("수정할 회차를 입력하세요: ");
@@ -133,17 +133,6 @@ public class ScoreController {
             }
         }
 
-        // 이전 정보 저장
-        int prevScore = 0;
-        char prevGrade = 'N';
-        for (Score s : student.getScoreList()) {
-            if (s.getSubjectId().equals(subjectNum) && s.getRound() == round) {
-                prevScore = s.getScore();
-                prevGrade = s.getGrade();
-                break;
-            }
-        }
-
         System.out.print("새로운 점수를 입력하세요: ");
         int newScore;
         while (true) {
@@ -151,6 +140,17 @@ public class ScoreController {
             if (newScore < 0 || newScore > 100) {
                 System.out.print("점수는 0 ~ 100 사이의 숫자입니다. 다시 입력해주세요: ");
             } else {
+                break;
+            }
+        }
+
+        // 이전 정보 저장
+        int prevScore = 0;
+        char prevGrade = 'N';
+        for (Score s : student.getScoreList()) {
+            if (s.getSubjectId().equals(subjectNum) && s.getRound() == round) {
+                prevScore = s.getScore();
+                prevGrade = s.getGrade();
                 break;
             }
         }
