@@ -54,7 +54,7 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 - **주석**: 주석은 적절하게 사용되어 메서드의 용도를 설명하고 있습니다.
 - **상수**: 상수는 대문자로 작성되어 있습니다.
 
-## Github Rules
+## 🐱 Github Rules
 - 자신의 브랜치에서 코드 구현
   
 - 하나의 기능을 구현 할 때마다 commit
@@ -65,4 +65,4 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 - message : [update] 수강생 등록 기능 구현
 - 작업한 내용과 기능이 무엇인지 정확히 파악 가능하게 message 적기 <br><br>
 
-<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/5195ca23-e684-43b8-a14f-8b79cd94302f" width="500">
+<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/5195ca23-e684-43b8-a14f-8b79cd94302f" width="450">
