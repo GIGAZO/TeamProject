@@ -1,5 +1,6 @@
 package TeamProject.src.controller;
 
+import TeamProject.src.Init;
 import TeamProject.src.model.Student;
 import TeamProject.src.model.Subject;
 
@@ -21,7 +22,7 @@ public class StudentController {
     private static final String INDEX_TYPE_SCORE = "SC";
 
     Scanner sc = new Scanner(System.in);
-
+    private static Init init = new Init();
 
     // 수강생 등록 (상윤님 파트)
     public List<Student> createStudent(List<Student> studentStore, List<Subject> subjectStore) {
@@ -31,7 +32,7 @@ public class StudentController {
         String studentName = sc.next();
         System.out.println("\n");
 
-        String studentId = sequence(INDEX_TYPE_STUDENT);
+        String studentId = init.sequence(INDEX_TYPE_STUDENT);
         Student newStudent = new Student(studentId, studentName);
 
         // 기능 구현 (필수 과목, 선택 과목)
@@ -95,10 +96,6 @@ public class StudentController {
                 break;
             }
         }
-
-        // 선택된 과목 리스트 출력
-        //System.out.println("선택된 과목:");
-        //student.getSubjectList().forEach(subject -> System.out.println("• " + subject.getSubjectName()));
 
         // 선택된 과목 리스트 출력
         List<String> mandatorySubjects = student.getSubjectList().stream()
@@ -278,20 +275,6 @@ public class StudentController {
     }
 
 
-    public String sequence(String type) {
-        switch (type) {
-            case INDEX_TYPE_STUDENT -> {
-                studentIndex++;
-                return INDEX_TYPE_STUDENT + studentIndex;
-            }
-            case INDEX_TYPE_SUBJECT -> {
-                subjectIndex++;
-                return INDEX_TYPE_SUBJECT + subjectIndex;
-            }
-            default -> {
-                return type;
-            }
-        }
-    }
+
 
 }
