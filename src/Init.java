@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Init {
 
-    private static String SUBJECT_TYPE_MANDATORY = "MANDATORY"; // 필수 과목 설정용 상수
-    private static String SUBJECT_TYPE_CHOICE = "CHOICE"; // 선택 과목 설정용 상수
+    public static final String SUBJECT_TYPE_MANDATORY = "MANDATORY"; // 필수 과목 설정용 상수
+    public static final String SUBJECT_TYPE_CHOICE = "CHOICE"; // 선택 과목 설정용 상수
 
     // index 관리 필드// 과목용 인덱스
     private static int studentIndex; // 학생용 인덱스
