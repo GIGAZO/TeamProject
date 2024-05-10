@@ -1,5 +1,6 @@
 package TeamProject.src.controller;
 
+import TeamProject.src.Init;
 import TeamProject.src.model.Student;
 import TeamProject.src.model.Subject;
 
@@ -7,21 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import static TeamProject.src.Init.*;
 
 public class StudentController {
 
-    private String SUBJECT_TYPE_MANDATORY = "MANDATORY"; // 필수 과목 설정용 상수
-    private String SUBJECT_TYPE_CHOICE = "CHOICE"; // 선택 과목 설정용 상수
-
-    private static int studentIndex; // 학생용 인덱스
-    private static final String INDEX_TYPE_STUDENT = "ST";
-    private static int subjectIndex; // 과목용 인덱스
-    private static final String INDEX_TYPE_SUBJECT = "SU";
-    private static int scoreIndex; // 점수용 인덱스 (안 써도 될듯)
-    private static final String INDEX_TYPE_SCORE = "SC";
-
     Scanner sc = new Scanner(System.in);
+    private static Init init = new Init();
 
+    SubjectController subjectController = new SubjectController();
 
     // 수강생 등록 (상윤님 파트)
     public List<Student> createStudent(List<Student> studentStore, List<Subject> subjectStore) {
@@ -31,16 +25,16 @@ public class StudentController {
         String studentName = sc.next();
         System.out.println("\n");
 
-        String studentId = sequence(INDEX_TYPE_STUDENT);
+        String studentId = init.sequence(INDEX_TYPE_STUDENT);
         Student newStudent = new Student(studentId, studentName);
 
         // 기능 구현 (필수 과목, 선택 과목)
         System.out.println("• 필수과목 / 3개 이상의 과목을 번호로 선택하세요.");
-        selectSubjects(newStudent, SUBJECT_TYPE_MANDATORY, 3, subjectStore);
+        subjectController.selectSubjects(newStudent, SUBJECT_TYPE_MANDATORY, 3, subjectStore);
 
         System.out.println("\n");
         System.out.println("• 선택과목 / 2개 이상의 과목을 번호로 선택하세요");
-        selectSubjects(newStudent, SUBJECT_TYPE_CHOICE, 2, subjectStore);
+        subjectController.selectSubjects(newStudent, SUBJECT_TYPE_CHOICE, 2, subjectStore);
 
         System.out.println("\n");
         System.out.println("• 상태 선택 / 해당하는 상태를 번호로 선택하세요.");
@@ -52,67 +46,6 @@ public class StudentController {
         //System.out.println("==================================");
 
         return studentStore;
-    }
-
-    public void selectSubjects(Student student, String subjectType, int minimumSubjects, List<Subject> subjectStore) {
-        // 과목의 타입에 따라 선택지가 만들어지도록
-        List<Subject> choiceSubjects = subjectStore.stream()
-                .filter(subject -> subject.getSubjectType().equals(subjectType)) // 파라미터에 담긴 과목 타입으로 필터링(같은 것을 찾음)
-                .collect(Collectors.toList()); // 필터링의 결과를 다시 리스트로 담는 것 -> availableSubjects에 담김
-        int count = 0;
-        //System.out.println("과목을 선택하세요(번호 입력):");
-
-        while (count < minimumSubjects || (count < choiceSubjects.size() && count >= minimumSubjects)) {
-            // 선택지 생성, 과목을 리스트 형태로
-            for (int i = 0; i < choiceSubjects.size(); i++) {
-                Subject sub = choiceSubjects.get(i);
-                System.out.println((i + 1) + ". " + sub.getSubjectName());
-            }
-
-            int choice = sc.nextInt() - 1; // 입력 받은 숫자에서 -1로 번호 조정
-            if (choice >= 0 && choice < choiceSubjects.size()) {
-                Subject selectedSubject = choiceSubjects.get(choice);
-                if (!student.getSubjectList().contains(selectedSubject)) {
-                    student.setSubjectList(selectedSubject);
-                    count++;
-                    System.out.println(selectedSubject.getSubjectName() + "이(가) 추가되었습니다.");
-                } else {
-                    System.out.println("※ 이미 선택된 과목입니다.");
-                }
-            } else {
-                System.out.println("※ 잘못 입력되었습니다. 다시 선택해주세요.");
-            }
-
-            if (count >= minimumSubjects && count < choiceSubjects.size()) {
-                System.out.print("과목을 더 추가하시겠습니까? (y/n): ");
-                String answer = sc.next();
-                //System.out.print("\n=======================================\n");
-                if (answer.equalsIgnoreCase("n")) {
-                    break;
-                }
-            } else if (count == choiceSubjects.size()) {
-                //System.out.println("모든 선택 가능한 과목이 추가되었습니다.");
-                break;
-            }
-        }
-
-        // 선택된 과목 리스트 출력
-        //System.out.println("선택된 과목:");
-        //student.getSubjectList().forEach(subject -> System.out.println("• " + subject.getSubjectName()));
-
-        // 선택된 과목 리스트 출력
-        List<String> mandatorySubjects = student.getSubjectList().stream()
-                .filter(subject -> subject.getSubjectType().equals(SUBJECT_TYPE_MANDATORY))
-                .map(Subject::getSubjectName)
-                .collect(Collectors.toList());
-
-        List<String> choiSubjects = student.getSubjectList().stream()
-                .filter(subject -> subject.getSubjectType().equals(SUBJECT_TYPE_CHOICE))
-                .map(Subject::getSubjectName)
-                .collect(Collectors.toList());
-
-        System.out.println("선택된 필수 과목: " + String.join(", ", mandatorySubjects));
-        System.out.println("선택된 선택 과목: " + String.join(", ", choiSubjects));
     }
 
     public void selectStatus(Student student) {
@@ -169,17 +102,15 @@ public class StudentController {
         // 과목 목록 초기화 및 새로 선택
         student.getSubjectList().clear();
         System.out.println("• 필수과목 / 3개 이상의 과목을 번호로 선택하세요.");
-        selectSubjects(student, SUBJECT_TYPE_MANDATORY, 3, subjectStore);
+        subjectController.selectSubjects(student, SUBJECT_TYPE_MANDATORY, 3, subjectStore);
         System.out.println("• 선택과목 / 2개 이상의 과목을 번호로 선택하세요.");
-        selectSubjects(student, SUBJECT_TYPE_CHOICE, 2, subjectStore);
+        subjectController.selectSubjects(student, SUBJECT_TYPE_CHOICE, 2, subjectStore);
 
         // 상태 업데이트
         selectStatus(student);
 
         System.out.println("수강생 정보가 성공적으로 수정되었습니다.");
     }
-
-
 
     // 수강생 목록 조회 (승훈님 파트)
     public void inquireStudent(List<Student> studentStore) {
@@ -215,6 +146,7 @@ public class StudentController {
         System.out.print("\n관리할 수강생의 번호를 입력하시오...");
         return sc.next();
     }
+
     // 상태별 수강생 목록 조회 (효진님 파트)
     public void inquireStudentsByStudentStatus(List<Student> studentStore) {
         System.out.println("조회하고 싶은 수강생의 상태를 [숫자로] 입력해주세요.");
@@ -237,6 +169,7 @@ public class StudentController {
             break;
         }
     }
+
     public void printStudentByStatus(List<Student> studentStore, String status) {
         List<Student> statusStudent = new ArrayList<>();
         for (Student student : studentStore) {
@@ -276,22 +209,4 @@ public class StudentController {
             }
         }
     }
-
-
-    public String sequence(String type) {
-        switch (type) {
-            case INDEX_TYPE_STUDENT -> {
-                studentIndex++;
-                return INDEX_TYPE_STUDENT + studentIndex;
-            }
-            case INDEX_TYPE_SUBJECT -> {
-                subjectIndex++;
-                return INDEX_TYPE_SUBJECT + subjectIndex;
-            }
-            default -> {
-                return type;
-            }
-        }
-    }
-
 }
