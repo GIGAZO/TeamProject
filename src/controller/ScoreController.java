@@ -41,7 +41,7 @@ public class ScoreController {
             }
         }
         // 해당 과목 회차별 등급 출력
-        List<Integer> roundList = printIsScore(student);
+        List<Integer> roundList = printIsScore(student, subjectId);
 
         System.out.println("시험 점수를 새로 등록할 회차(숫자만)를 입력해주세요.");
 
@@ -119,8 +119,8 @@ public class ScoreController {
         }
 
         /* 회차 수정 */
-        // System.out.println("현재 등록된 회차 목록: ");
-        List<Integer> roundList = printIsScore(student);
+        System.out.println("현재 등록된 회차 목록: ");
+        List<Integer> roundList = printIsScore(student, subjectId);
 
         System.out.print("수정할 회차를 입력하세요: ");
         int round;
@@ -133,17 +133,6 @@ public class ScoreController {
             }
         }
 
-        System.out.print("새로운 점수를 입력하세요: ");
-        int newScore;
-        while (true) {
-            newScore = sc.nextInt();
-            if (newScore < 0 || newScore > 100) {
-                System.out.print("점수는 0 ~ 100 사이의 숫자입니다. 다시 입력해주세요: ");
-            } else {
-                break;
-            }
-        }
-
         // 이전 정보 저장
         int prevScore = 0;
         char prevGrade = 'N';
@@ -151,6 +140,17 @@ public class ScoreController {
             if (s.getSubjectId().equals(subjectNum) && s.getRound() == round) {
                 prevScore = s.getScore();
                 prevGrade = s.getGrade();
+                break;
+            }
+        }
+
+        System.out.print("새로운 점수를 입력하세요: ");
+        int newScore;
+        while (true) {
+            newScore = sc.nextInt();
+            if (newScore < 0 || newScore > 100) {
+                System.out.print("점수는 0 ~ 100 사이의 숫자입니다. 다시 입력해주세요: ");
+            } else {
                 break;
             }
         }
@@ -213,10 +213,12 @@ public class ScoreController {
     }
 
     // 정효진 수정 -> 해당 과목의 점수가 등록되어 있는 회차 출력 함수
-    public List<Integer> printIsScore(Student student) {
+    public List<Integer> printIsScore(Student student, String subjectId) {
         List<Integer> roundList = new ArrayList<>();
         for (Score s : student.getScoreList()) {
-            roundList.add(s.getRound());
+            if (s.getSubjectId().equals(subjectId)) {
+                roundList.add(s.getRound());
+            }
         }
         if (roundList.size() == 0) {
             System.out.println("점수가 등록되어 있는 회차가 없습니다.");
