@@ -13,11 +13,10 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 ## 📕 기획 명세서
 
 ### 요구사항 정의서
-<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/b2e06662-30a6-47ef-8e9c-b015c8fefcba" width="400">
+<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/b2e06662-30a6-47ef-8e9c-b015c8fefcba" width="600">
 
 ### ERD Diagram
-![image](https://github.com/GIGAZO/TeamProject/assets/102974424/07ab1265-a1de-4bde-9e39-22599a7731cf)
-
+<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/07ab1265-a1de-4bde-9e39-22599a7731cf" width="600">
 
 ## 🔖 Features
 
@@ -42,6 +41,7 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
       
 ## 🤙 Commit convention
 - **파일 이름:** JAVA 파일 이름은 포함된 소스의 최상위 클래스의 이름과 `.java` 확장자로 구성했습니다.
+  
 - **import:** 와일드 카드 (ex. java.util.* 처럼 아스테리스크로 하위 클래스를 다 적용하는 방식)으로는 가져오지 않았습니다.
 - **클래스 이름**: 클래스 이름은 카멜 케이스를 따라 첫 글자를 대문자로 작성했습니다.
 - **메소드 이름**: 메소드 이름도 카멜 케이스를 따라 작성되었고, 의미 있는 이름을 사용하고 있습니다.
@@ -63,4 +63,4 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 - message : [update] 수강생 등록 기능 구현
 - 작업한 내용과 기능이 무엇인지 정확히 파악 가능하게 message 적기 <br><br>
 
-<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/5195ca23-e684-43b8-a14f-8b79cd94302f" width="400">
+<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/5195ca23-e684-43b8-a14f-8b79cd94302f" width="600">
