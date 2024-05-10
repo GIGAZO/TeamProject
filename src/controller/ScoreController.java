@@ -182,7 +182,9 @@ public class ScoreController {
                     sub = s;
                     flag = true;
                     for(int i = 0; i < student.getScoreList().size(); i++){
-                        System.out.println(sub.getSubjectName() + "의 " + (i + 1) + "회차 등급은 " + student.getScoreList().get(i).getGrade() + "입니다.");
+                        if (student.getScoreList().get(i).getSubjectId().equals(subNum)) {
+                            System.out.println(sub.getSubjectName() + "의 " + (i + 1) + "회차 등급은 " + student.getScoreList().get(i).getGrade() + "입니다.");
+                        }
                     }
                     break;
                 }
