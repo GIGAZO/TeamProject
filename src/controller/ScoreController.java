@@ -41,7 +41,7 @@ public class ScoreController {
             }
         }
         // 해당 과목 회차별 등급 출력
-        List<Integer> roundList = printIsScore(student);
+        List<Integer> roundList = printIsScore(student, subjectId);
 
         System.out.println("시험 점수를 새로 등록할 회차(숫자만)를 입력해주세요.");
 
@@ -120,7 +120,7 @@ public class ScoreController {
 
         /* 회차 수정 */
         System.out.println("현재 등록된 회차 목록: ");
-        List<Integer> roundList = printIsScore(student);
+        List<Integer> roundList = printIsScore(student, subjectId);
 
         System.out.print("수정할 회차를 입력하세요: ");
         int round;
@@ -213,10 +213,12 @@ public class ScoreController {
     }
 
     // 정효진 수정 -> 해당 과목의 점수가 등록되어 있는 회차 출력 함수
-    public List<Integer> printIsScore(Student student) {
+    public List<Integer> printIsScore(Student student, String subjectId) {
         List<Integer> roundList = new ArrayList<>();
         for (Score s : student.getScoreList()) {
-            roundList.add(s.getRound());
+            if (s.getSubjectId().equals(subjectId)) {
+                roundList.add(s.getRound());
+            }
         }
         if (roundList.size() == 0) {
             System.out.println("점수가 등록되어 있는 회차가 없습니다.");
