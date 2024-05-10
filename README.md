@@ -13,8 +13,7 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 ## 📕 기획 명세서
 
 ### 요구사항 정의서
-![image](https://github.com/GIGAZO/TeamProject/assets/102974424/b2e06662-30a6-47ef-8e9c-b015c8fefcba)
-
+<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/b2e06662-30a6-47ef-8e9c-b015c8fefcba" width="400">
 
 ### ERD Diagram
 ![image](https://github.com/GIGAZO/TeamProject/assets/102974424/07ab1265-a1de-4bde-9e39-22599a7731cf)
@@ -62,6 +61,6 @@ Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.c
 - develop에 올라가면 slack에 공지 - ex) develop pull 한 번 해주세요~ <br><br>
 - git commit -m “message”
 - message : [update] 수강생 등록 기능 구현
-- 작업한 내용과 기능이 무엇인지 정확히 파악 가능하게 message 적기 <br>
+- 작업한 내용과 기능이 무엇인지 정확히 파악 가능하게 message 적기 <br><br>
 
-<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/5195ca23-e684-43b8-a14f-8b79cd94302f" width="200">
+<img src="https://github.com/GIGAZO/TeamProject/assets/102974424/5195ca23-e684-43b8-a14f-8b79cd94302f" width="400">
