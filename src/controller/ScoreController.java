@@ -103,7 +103,7 @@ public class ScoreController {
         System.out.println("\n시험 점수를 수정합니다...");
 
         /* 과목 수정 */
-        System.out.print("\n수정할 과목 번호를 입력하세요: ");
+        System.out.print("\n수정할 과목 고유번호를 입력하세요: ");
         String subjectNum = sc.next();
 
         Subject selectedSubject = null;
