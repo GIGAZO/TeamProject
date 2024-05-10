@@ -24,6 +24,7 @@ public class Init {
     }
 
     public static List<Subject> setInitSubject() {
+        // 과목별로 객체를 생성해서 전체 과목 List에 담아주기
         List<Subject> subjectStore = List.of( // 과목별로 객체를 생성해서 전체 과목 List에 담아주기
                 new Subject(
                         sequence(INDEX_TYPE_SUBJECT),
