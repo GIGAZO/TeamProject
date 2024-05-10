@@ -13,6 +13,7 @@ public class ScoreController {
     StudentController studentController = new StudentController();
     SubjectController subjectController = new SubjectController();
     Scanner sc = new Scanner(System.in);
+
     // 수강생의 과목별 시험 회차 및 점수 등록 (효진님 파트)
     public void createScore(List<Student> studentStore) {
         // 관리할 수강생 고유 번호
@@ -43,6 +44,7 @@ public class ScoreController {
         List<Integer> roundList = printIsScore(student);
 
         System.out.println("시험 점수를 새로 등록할 회차(숫자만)를 입력해주세요.");
+
         // 몇 회차입력 받기
         int round = 0;
         while (true) {
@@ -56,6 +58,7 @@ public class ScoreController {
                 break;
             }
         }
+
         // 점수 입력받기
         System.out.println("등록할 점수를 입력해주세요.");
         int score = 0;
@@ -267,6 +270,7 @@ public class ScoreController {
             System.out.println("-----------------------");
         }
     }
+
     // 지우 수정: 등급 반환하도록 변경
     public char makeGrade(String subjectId, Student student, int score, int round) {
         char grade;
@@ -309,7 +313,6 @@ public class ScoreController {
         student.setScoreList(newScore);
         return grade;
     }
-
 
     // 과목별 평균 등급 산정
     public void averageGrade(Subject subject, Student student) {
