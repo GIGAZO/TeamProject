@@ -2,7 +2,7 @@
 
 이 프로그램은 수강생들의 정보를 효율적으로 관리하는 프로그램입니다.
 
-Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.com/rohtable/), [이지우](https://github.com/20210805jiwoo), [정효진](https://github.com/hyojjin-jeong), [한승훈](https://github.com/hsh1105)
+Member : [김예찬](https://github.com/wondo8449), [노상윤](https://github.com/rohtable/), [이지우](https://github.com/wldnfl), [정효진](https://github.com/hyojjin-jeong), [한승훈](https://github.com/hsh1105)
 
 ## 🛠️ Tech Stack
 
